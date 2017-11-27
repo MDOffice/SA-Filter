@@ -1097,7 +1097,6 @@
     });
     //=============================================================================
     CCI.QueryableDropdownNumRange = function (options) {
-        var instance = this;
         this._setOptions(options);
         this.container_id = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
 
