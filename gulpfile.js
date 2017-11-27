@@ -32,12 +32,12 @@ gulp.task('scripts', function () {
     gulp.src(paths.js)
         .on('error', console.log)
         .pipe(uglify())
-        .pipe(gulp_version_tag(__dirname,'./package.json', {
+        /*.pipe(gulp_version_tag(__dirname,'./package.json', {
 
             global: true,
             prefix: '---v',
             suffix: '---'
-        }))
+        }))*/
         .pipe(rename('sa-filter-bootstrap.js'))
         .pipe(gulp.dest('./dist/js'))
         .pipe(concat('sa-filter-bootstrap.min.js'))
