@@ -26,13 +26,10 @@
         "gulp-csso": "^2.0.0",
         "gulp-imagemin": "^4.1.0",
         "gulp-jscs": "^4.0.0",
-        "gulp-less": "^4.0.0",
-        "gulp-release-tag": "^1.0.3",
         "gulp-rename": "^1.2.3",
         "gulp-rev": "^8.1.1",
         "gulp-sourcemaps": "^2.6.1",
         "gulp-uglify": "^3.0.0",
-        "gulp-version-tag": "0.0.10",
         "path": "^0.12.7"
     }
 }

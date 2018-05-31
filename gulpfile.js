@@ -1,7 +1,6 @@
 var del = require('del'),
     gulp = require('gulp'),
-    rename = require("gulp-rename"),
-    gulp_version_tag = require("gulp-version-tag");
+    rename = require("gulp-rename");
 //SCRIPT
 var uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
