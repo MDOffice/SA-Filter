@@ -9,7 +9,6 @@
         "patch": "gulp bump-version -t patch",
         "minor": "gulp bump-version -t minor",
         "major": "gulp bump-version -t major",
-
         "release": "gulp release"
     },
     "repository": {
@@ -23,14 +22,14 @@
         "gulp-concat": "^2.6.1",
         "gulp-concat-css": "^2.3.0",
         "gulp-csscomb": "^3.0.8",
-        "gulp-csslint": "^1.0.0",
+        "gulp-csslint": "^1.0.1",
         "gulp-csso": "^2.0.0",
         "gulp-imagemin": "^3.3.0",
         "gulp-jscs": "^4.0.0",
         "gulp-less": "^3.3.2",
         "gulp-release-tag": "^1.0.3",
-        "gulp-rename": "^1.2.2",
-        "gulp-rev": "^8.1.0",
+        "gulp-rename": "^1.2.3",
+        "gulp-rev": "^8.1.1",
         "gulp-sourcemaps": "^2.6.1",
         "gulp-uglify": "^3.0.0",
         "gulp-version-tag": "0.0.10",

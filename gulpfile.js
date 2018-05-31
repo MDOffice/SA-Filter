@@ -1,6 +1,5 @@
 var del = require('del'),
     gulp = require('gulp'),
-    path = require('path'),
     rename = require("gulp-rename"),
     gulp_version_tag = require("gulp-version-tag");
 //SCRIPT
@@ -13,7 +12,6 @@ var csso = require('gulp-csso'),
     csslint = require('gulp-csslint'),
     concatCss = require('gulp-concat-css');
 
-require('gulp-release-tag')(gulp);
 
 
 //PATHS

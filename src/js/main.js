@@ -976,9 +976,10 @@
                 instance.blockSingleSelect.refresh();
             });
             $(instance.container).on('hidden.bs.dropdown', function () {
-                if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
-                    instance.dropdown.resetToInitValue();
-                }
+                if (instance.props.submit)
+                    if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
+                        instance.dropdown.resetToInitValue();
+                    }
             });
         },
         render: function () {
@@ -1081,9 +1082,10 @@
             });
             $(instance.container).on('hidden.bs.dropdown', function () {
                 console.log('hidden.bs.dropdown');
-                if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
-                    instance.dropdown.resetToInitValue();
-                }
+                if (instance.props.submit)
+                    if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
+                        instance.dropdown.resetToInitValue();
+                    }
             });
         },
         render: function () {
@@ -1289,9 +1291,10 @@
                 instance.blockSingleSelect.refresh();
             });
             instance.component.on('hidden.bs.dropdown', function () {
-                if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
-                    instance.dropdown.resetToInitValue();
-                }
+                if (instance.props.submit)
+                    if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
+                        instance.dropdown.resetToInitValue();
+                    }
             });
         },
         _render: function () {
