@@ -8,8 +8,8 @@ var uglify = require('gulp-uglify'),
 //STYLE
 var csso = require('gulp-csso'),
     csscomb = require('gulp-csscomb'),
-    csslint = require('gulp-csslint'),
-    concatCss = require('gulp-concat-css');
+    csslint = require('gulp-csslint')/*,
+    concatCss = require('gulp-concat-css')*/;
 
 
 
@@ -61,7 +61,6 @@ gulp.task('styles', function () {
         //.pipe(gulp_version_tag(__dirname,'./package.json'))
         .pipe(rename('sa-filter-bootstrap.css'))
         .pipe(gulp.dest('./dist/css'))
-        .pipe(concatCss('sa-filter-bootstrap.min.css'))
         .pipe(csso())
         .pipe(gulp.dest('./dist/css'));
 });

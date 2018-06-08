@@ -515,12 +515,14 @@
             that.next().removeClass(ListBlock.prototype.icon_search).addClass('clear-field ' + ListBlock.prototype.icon_clear);
             var items = [], is_active;
             if (instance.props.searchUrl) {
+                var data = {q: findText};
+                if(instance.props.searchUrlCache && instance.props.searchUrlCache == '1'){
+                    data.cache = Math.random();
+                }
                 $.ajax({
                     url: instance.props.searchUrl,
                     dataType: 'json',
-                    data: {
-                        q: findText
-                    },
+                    data: data,
                     async: false,
                     success: function (d) {
                         $.each(d.items, function (index, element) {
@@ -603,6 +605,7 @@
             search_id: props.search_id || 'search',
             search_container: props.search_container,
             searchUrl: props.searchUrl,
+            searchUrlCache: props.searchUrlCache,
             nomatchText: props.nomatchText,
             exclude: props.exclude,
             hidden: props.hidden,
@@ -720,6 +723,7 @@
             search_id: props.search_id || 'search',
             search_container: props.search_container,
             searchUrl: props.searchUrl,
+            searchUrlCache: props.searchUrlCache,
             nomatchText: props.nomatchText,
             exclude: props.exclude,
             hidden: props.hidden,
@@ -917,6 +921,7 @@
                 nomatch: instance.container.attr('data-nomatch'),
                 ALL: instance.container.attr('data-ALL'),
                 url: instance.container.attr('data-url'),
+                urlCache: instance.container.attr('data-urlCache'),
                 exclude: instance.container.attr('data-exclude'),
                 hidden: instance.container.attr('data-hidden'),
                 btn_subtle: instance.container.hasClass('subtle'),
@@ -962,6 +967,7 @@
                 'search_id': this.container_id + '-search',
                 'search_container': this.container_id + '-suggestion',
                 'searchUrl': this.props.url,
+                'searchUrlCache': this.props.urlCache,
                 'nomatchText': this.props.nomatch,
                 'hide': this.props.hide,
                 'exclude': this.props.exclude,
@@ -1020,6 +1026,7 @@
                 nomatch: instance.container.attr('data-nomatch'),
                 ALL: instance.container.attr('data-ALL'),
                 url: instance.container.attr('data-url'),
+                urlCache: instance.container.attr('data-urlCache'),
                 exclude: instance.container.attr('data-exclude'),
                 hidden: instance.container.attr('data-hidden'),
                 btn_subtle: instance.container.hasClass('subtle'),
@@ -1067,6 +1074,7 @@
                 'search_id': this.container_id + '-search',
                 'search_container': this.container_id + '-suggestion',
                 'searchUrl': this.props.url,
+                'searchUrlCache': this.props.urlCache,
                 'nomatchText': this.props.nomatch,
                 'hide': this.props.hide,
                 'exclude': this.props.exclude,
