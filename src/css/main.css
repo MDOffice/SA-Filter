@@ -14,7 +14,8 @@
 
 .sa-filter-select .submit-footer,
 .sa-filter-multiselect .submit-footer,
-.sa-filter-date .submit-footer {
+.sa-filter-date .submit-footer,
+.sa-filter-num .submit-footer {
     background: #3572b0;
     border-color: transparent;
     color: #fff;
@@ -166,8 +167,12 @@
 .check-list-select .multiselect-field-container .icon-default.clear-field {cursor: pointer;opacity: 0.7;}
 .check-list-item, .check-list-group-footer {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;padding: 6px 10px 6px 34px;position: relative;}
 .select-list-item, .select-list-group-footer {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;padding: 6px 10px;position: relative;}
-.check-list-item label, .select-list-item label, .check-list-group-footer label, .select-list-group-footer label {clear: none;color: inherit;display: block;left: 0;line-height: 1.4;margin: 0;overflow: hidden;padding: 0;position: static;text-overflow: ellipsis;white-space: nowrap;width: auto;}
-.check-list-item label input[type="checkbox"], .check-list-group-footer label input[type="checkbox"] {position: absolute;left: 10px;}
+.check-list-item label,
+.select-list-item label,
+.check-list-group-footer label,
+.select-list-group-footer label {clear: none;color: inherit;display: block;left: 0;line-height: 1.4;margin: 0;overflow: hidden;padding: 0;position: static;text-overflow: ellipsis;white-space: nowrap;width: auto;}
+.check-list-item label input[type="checkbox"],
+.check-list-group-footer label input[type="checkbox"] {position: absolute;left: 10px;}
 .select-list-item,.select-list-item .item-label{cursor:pointer}
 .check-list-item:hover,.select-list-item:hover,.select-list-item.active{background-color: #ebf2f9;}
 .list-search .criteria-wrap {white-space: nowrap;text-overflow: ellipsis;overflow: hidden;max-width: 200px;}

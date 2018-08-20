@@ -62,6 +62,9 @@ gulp.task('styles', function () {
         .pipe(rename('sa-filter-bootstrap.css'))
         .pipe(gulp.dest('./dist/css'))
         .pipe(csso())
+        .pipe(rename({
+            suffix: ".min"
+        }))
         .pipe(gulp.dest('./dist/css'));
 });
 

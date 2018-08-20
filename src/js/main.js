@@ -1,25 +1,5 @@
 (function ($) {
     var CCI = CCI || {};
-    CCI.Templates = CCI.Templates || {};
-
-    CCI.Templates.filterRangeContent = function (opt_data) {
-        var html = '<div id="' + opt_data.dropdown_id + '" class="sa-filter-form  dropdown-menu"><form onsubmit="return false">';
-        html += '<div class="form-body"><div class="field-group aui-field-workratio">';
-        html += '<input name="' + opt_data.name + '" type="hidden" value="">';
-
-        html += '<div class="' + opt_data.name + '-min"><label for="searcher-' + opt_data.name + '-min">' + (opt_data.title_min ? opt_data.title_min : 'Min') + '</label>';
-        html += '<input class="text" id="searcher-' + opt_data.name + '-min" type="number" min="' + opt_data.min + '" max="' + opt_data.max + '">';
-        html += '</div>';
-
-        html += '<div class="' + opt_data.name + '-max"><label for="searcher-' + opt_data.name + '-max">' + (opt_data.title_max ? opt_data.title_max : 'Max') + '</label>';
-        html += '<input class="text" id="searcher-' + opt_data.name + '-max" type="number" min="' + opt_data.min + '" max="' + opt_data.max + '">';
-        html += '</div>';
-
-        html += '</div></div></form></div>';
-
-        return html;
-    };
-
     //=============================================================================
     var Button = function (props) {
         this.options = props;//id, is_subtle, title, label, labelAlways, labelAll
@@ -446,6 +426,130 @@
         return html;
     };
 
+    var NumRangeBlock = function (props) {
+        this.name = props.name;
+        this.value = props.value || '';
+        this.title = {
+            min: props.title.min,
+            max: props.title.max
+        };
+        this.error_date = props.error_date;
+        this._init();
+    };
+    NumRangeBlock.prototype = Object.create(Block.prototype);
+    NumRangeBlock.prototype.constructor = NumRangeBlock;
+    NumRangeBlock.prototype._init = function () {
+        var instance = this;
+        instance.component = $(instance._template());
+
+        var range = this.value;
+        this.input = this.component.find('input[name="' + this.name + '"]');
+        if (range.indexOf(',') > -1) {
+            var min = range.substr(0, range.indexOf(',')),
+                max = range.substr(range.indexOf(',') + 1);
+            this.component.find('#num-' + this.name + '-min').val(min);
+            this.component.find('#num-' + this.name + '-max').val(max);
+            this.input.val(this.value);
+        }
+
+        $(instance.component).on('keyup', 'input.text', function () {
+            instance.handleChange(this);
+        });
+    };
+    NumRangeBlock.prototype.handleChange = function (self) {
+        var that = $(self),
+            fieldCurrType = that.attr('id') === 'num-' + this.name + '-min' ? 'min' : 'max';
+
+        var oldFullValue = this.value,
+            oldMinValue = '',
+            newMinValue = '',
+            oldMaxValue = '',
+            newMaxValue = '';
+        console.log('oldFullValue', oldFullValue);
+        if (this.validValue(oldFullValue)) {
+            newMinValue = oldMinValue = oldFullValue.substr(0, oldFullValue.indexOf(','));
+            newMaxValue = oldMaxValue = oldFullValue.substr(oldFullValue.indexOf(',') + 1);
+        }
+
+        if (fieldCurrType === 'min') {
+            newMinValue = that.val();
+        } else {
+            newMaxValue = that.val();
+        }
+
+        /*if (newMinValue && newMaxValue && newMinValue > newMaxValue && this.error_date) {
+            setTimeout(function () {
+                that.val(fieldCurrType === 'min' ? oldMinValue : oldMaxValue);
+            }, 0);
+            alert(this.error_date);
+        } else {*/
+        this.setValue(newMinValue + (newMinValue || newMaxValue ? ',' : '') + newMaxValue);
+        this.trigger('change');
+        //}
+    };
+    NumRangeBlock.prototype.validValue = function (value) {
+        return value.indexOf(',') > -1 || value === '';
+    };
+    NumRangeBlock.prototype.setValue = function (value) {
+        this.value = value || '';
+        if (value === null) {
+            this.component.find('input.text').val(null);
+        }
+        this.input.prop('disabled', value === null);
+        if (this.validValue(this.value)) {
+            this.input.val(this.value);
+        }
+    };
+    NumRangeBlock.prototype.setEmptyValue = function () {
+        this.input.prop('disabled', false);
+        this.input.val('null');
+    };
+    NumRangeBlock.prototype.getValue = function () {
+        return this.value;
+    };
+    NumRangeBlock.prototype.getValueLabel = function () {
+        var value = this.value;
+        if (this.validValue(value)) {
+            var min = value.substr(0, value.indexOf(','));
+            var max = value.substr(value.indexOf(',') + 1);
+            if (min == '' && max == '') {
+                value = null;
+            } else if (min == '') {
+                value = '< ' + max
+            } else if (max == '') {
+                value = '> ' + min
+            } else {
+                value = min + ' - ' + max
+            }
+        }
+        return value;
+    };
+    NumRangeBlock.prototype.getValueTitle = function () {
+        return null;
+    };
+    NumRangeBlock.prototype.render = function () {
+        return this.component;
+    };
+    NumRangeBlock.prototype.renderInput = function () {
+        return this.input;
+    };
+    NumRangeBlock.prototype._template = function () {
+        var html = '';
+        html += '<div class="form-body"><div class="field-group aui-field-workratio">';
+        html += '<input name="' + this.name + '" type="hidden" disabled>';
+
+        html += '<div class="' + this.name + '-min"><label for="num-' + this.name + '-min">' + (this.title.min ? this.title.min : 'Min') + '</label>';
+        html += '<input type="number" class="text" id="num-' + this.name + '-min">';
+        html += '</div>';
+
+        html += '<div class="' + this.name + '-max"><label for="num-' + this.name + '-max">' + (this.title.max ? this.title.max : 'Max') + '</label>';
+        html += '<input type="number" class="text" id="num-' + this.name + '-max">';
+        html += '</div>';
+
+        html += '</div></div>';
+        return html;
+    };
+
     var ListBlock = function () {
     };
     ListBlock.prototype = Object.create(Block.prototype);
@@ -516,7 +620,7 @@
             var items = [], is_active;
             if (instance.props.searchUrl) {
                 var data = {q: findText};
-                if(instance.props.searchUrlCache && instance.props.searchUrlCache == '1'){
+                if (instance.props.searchUrlCache && instance.props.searchUrlCache == '1') {
                     data.cache = Math.random();
                 }
                 $.ajax({
@@ -1106,115 +1210,97 @@
         new CCI.QueryableDropdownMultiSelect(this);
     });
     //=============================================================================
-    CCI.QueryableDropdownNumRange = function (options) {
-        this._setOptions(options);
+    CCI.QueryableDropdownNumRange = function (component) {
+        this._setOptions(component);
         this.container_id = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
 
-        this._createButton();
-        this._createDropdownController();
-        this._assignEvents();
+        this.createButton();
+        this.createDropdownController();
+        this.createBlocks();
         this.render();
-    }
+        this.assignEvents();
+    };
     CCI.QueryableDropdownNumRange.prototype = {
-        _setOptions: function (opt) {
-            this.options = opt
-        },
-        _createButton: function () {
+        _setOptions: function (component) {
             var instance = this;
 
+            instance.component = $(component);
+
+            this.props = {
+                clear_text: instance.component.attr('data-clear'),
+                title: instance.component.attr('data-title'),
+                title_always: instance.component.attr('data-title-always'),
+                ALL: instance.component.attr('data-ALL'),
+                min: instance.component.attr('data-min'),
+                max: instance.component.attr('data-max'),
+                type: instance.component.attr('data-type') || '',
+                name: instance.component.attr('data-name'),
+                value: instance.component.attr('data-value'),
+                title_min: instance.component.attr('data-title-min'),
+                title_max: instance.component.attr('data-title-max'),
+                btn_subtle: instance.component.hasClass('subtle'),
+                submit: instance.component.attr('data-submit'),
+                submit_text: instance.component.attr('data-submit-text')
+            };
+        },
+        createButton: function () {
+            var instance = this;
             this.button = new Button({
                 'id': instance.container_id + '-dropdown',
                 'is_subtle': instance.props.btn_subtle,
+                'class': instance.props.btn_class,
                 'label': instance.props.title,
                 'labelAlways': instance.props.title_always,
                 'labelAll': instance.props.ALL
             });
         },
-        _updateButton: function (viewHTML) {
+        createDropdownController: function () {
             var instance = this;
-            var range = this.options.value;
-            var min = range.substr(0, range.indexOf(','));
-            var max = range.substr(range.indexOf(',') + 1);
-            if (min == '' && max == '') {
-                viewHTML = null;
-            } else if (min == '') {
-                viewHTML = instance.options.title + ': ' + '< ' + max + instance.options.type
-            } else if (max == '') {
-                viewHTML = instance.options.title + ': ' + '> ' + min + instance.options.type
-            } else {
-                viewHTML = instance.options.title + ': ' + min + instance.options.type + ' - ' + max + instance.options.type
-            }
-            /*,
-                        title = instance.options.elements.filter('[selected]').map(function() {
-                            return this.innerHTML
-                        }).get().join(', ')*/
-            this.button.setValue(viewHTML);
-            this.dropdown.find('input[name="' + this.options.name + '"]').val(instance.options.value);
-        },
-        _createDropdownController: function () {
-            var opts = {
-                dropdown_id: this.container_id + '-dropdown',
-                name: this.options.name,
-                min: this.options.min,
-                max: this.options.max,
-                title_min: this.options.title_min,
-                title_max: this.options.title_max
-            };
-            this.dropdown = $(CCI.Templates.filterRangeContent(opts));
-        },
-        _updateVal: function () {
-            var range = this.options.value;
-            var min = range.substr(0, range.indexOf(',')) || '';
-            var max = range.substr(range.indexOf(',') + 1) || '';
-            this.dropdown.find('#searcher-' + this.options.name + '-min').val(min);
-            this.dropdown.find('#searcher-' + this.options.name + '-max').val(max);
-            this.dropdown.find('input[name="' + this.options.name + '"]').val(this.options.value);
-        },
-        _assignEvents: function () {
-            var instance = this;
-            $(this.dropdown).on('keyup', 'input', function () {
-                var range = instance.options.value;
-                var min = range.substr(0, range.indexOf(','));
-                var max = range.substr(range.indexOf(',') + 1);
-
-                var that = $(this);
-                if (that.attr('id') == 'searcher-' + instance.options.name + '-min') {
-                    min = that.val();
-                } else {
-                    max = that.val();
-                }
-                instance.options.value = min + ',' + max;
-                instance._updateButton();
+            this.dropdown = new DropdownController({
+                'id': this.container_id + '-dropdown',
+                'submitText': this.props.submit_text
             });
-            $(instance.options.container).on('show.bs.dropdown', function () {
-                instance._updateVal();
+            this.dropdown.on({
+                    'change': function () {
+                        instance.button.setValue(instance.dropdown.getValueLabel(), instance.dropdown.getValueTitle());
+                    },
+                    'submit': function () {
+                        instance.props.onSubmit = true;
+                        $(instance.component).dropdown('toggle');
+                        eval(instance.props.submit);
+                    }
+                }
+            );
+        },
+        createBlocks: function () {
+            this.blockNumRange = new NumRangeBlock({
+                'name': this.props.name,
+                'value': this.props.value,
+                'title': {'min': this.props.title_min, 'max': this.props.title_max},
+                'error_date': "Значення початку не може бути більше закінчення"
+            });
+            this.dropdown.addComponent(this.blockNumRange);
+        },
+        assignEvents: function () {
+            var instance = this;
+            instance.component.on('hidden.bs.dropdown', function () {
+                if (instance.props.submit && !instance.props.onSubmit)
+                    if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
+                        instance.dropdown.resetToInitValue();
+                    }
+                if (instance.props.onSubmit)
+                    instance.props.onSubmit = false;
             });
         },
         render: function () {
-            this.options.container.append(this.button.render());
-            this.options.container.append(this.dropdown);
-            this._updateButton();
+            this.component.append(this.button.render());
+            this.component.append(this.dropdown.render());
+            this.component.append(this.blockNumRange.renderInput());
         }
     };
 
     $('.sa-filter-num').each(function () {
-        var instance = $(this);
-        var options = {
-            container: instance,
-            clear_text: instance.attr('data-clear'),
-            title: instance.attr('data-title'),
-            title_always: instance.attr('data-title-always'),
-            ALL: instance.attr('data-ALL'),
-            min: instance.attr('data-min'),
-            max: instance.attr('data-max'),
-            type: instance.attr('data-type') || '',
-            name: instance.attr('data-name'),
-            value: instance.attr('data-value'),
-            title_min: instance.attr('data-title-min'),
-            title_max: instance.attr('data-title-max'),
-            btn_subtle: instance.hasClass('subtle')
-        };
-        new CCI.QueryableDropdownNumRange(options);
+        new CCI.QueryableDropdownNumRange(this);
     });
     //=============================================================================
     //if has submit_text need send "null" to clear for submit
@@ -1270,8 +1356,9 @@
                         instance.button.setValue(instance.dropdown.getValueLabel(), instance.dropdown.getValueTitle());
                     },
                     'submit': function () {
-                        $(instance.container).dropdown('toggle');
+                        instance.props.onSubmit = true;
                         eval(instance.props.submit);
+                        $(instance.container).dropdown('toggle');
                     }
                 }
             );
@@ -1299,10 +1386,12 @@
                 instance.blockSingleSelect.refresh();
             });
             instance.component.on('hidden.bs.dropdown', function () {
-                if (instance.props.submit)
+                if (instance.props.submit && !instance.props.onSubmit)
                     if (instance.dropdown.getInitValue() !== instance.dropdown.getValue()) {
                         instance.dropdown.resetToInitValue();
                     }
+                if (instance.props.onSubmit)
+                    instance.props.onSubmit = false;
             });
         },
         _render: function () {
@@ -1316,13 +1405,5 @@
         new CCI.QueryableDropdownDateRange(this);
     });
     //============================================================================
-    /*(function() {
-        var search_dropdown = $('.filter-container').find(".dropdown");
-        search_dropdown.on({
-            "show.bs.dropdown": function() {
-                search_dropdown.hide()
-            }
-        });
-    })();*/
 
 }(jQuery));
