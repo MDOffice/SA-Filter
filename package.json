@@ -2,14 +2,8 @@
     "name": "sa-filter-bootstrap",
     "version": "0.1.24",
     "private": true,
-    "main": "gulpfile.js",
     "scripts": {
-        "build": "gulp build",
-        "lint": "gulp lint",
-        "patch": "gulp bump-version -t patch",
-        "minor": "gulp bump-version -t minor",
-        "major": "gulp bump-version -t major",
-        "release": "gulp release"
+        "build": "gulp build"
     },
     "repository": {
         "type": "git",
@@ -17,7 +11,17 @@
     },
     "author": "Kelatev",
     "devDependencies": {
-        "gulp": "^3.9.1",
+        "@babel/core": "^7.2.2",
+        "@babel/preset-env": "^7.3.1",
+        "@babel/register": "^7.0.0",
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.13.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.12.4",
+        "gulp": "^4.0.0",
+        "gulp-babel": "^8.0.0",
         "gulp-concat": "^2.6.1",
         "gulp-concat-css": "^2.3.0",
         "gulp-csscomb": "^3.0.8",

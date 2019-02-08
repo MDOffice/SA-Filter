@@ -1,23 +1,24 @@
-var gulp = require('gulp'),
-    rename = require("gulp-rename");
+import path from 'path';
 
-var uglify = require('gulp-uglify'),
-    concat = require('gulp-concat');
+import gulp from 'gulp';
+import babel from 'gulp-babel';
+import rename from 'gulp-rename';
 
-var csso = require('gulp-csso'),
-    csscomb = require('gulp-csscomb');
+import uglify from 'gulp-uglify';
+import concat from 'gulp-concat';
 
-
+import csso from 'gulp-csso';
+import csscomb from 'gulp-csscomb';
 
 //  PATHS
-var paths = {
+const paths = {
     'js': './src/js/*.js',
     'css': 'src/css/*.css'
 };
 
 //  TASKS
 gulp.task('scripts', function () {
-    gulp.src(paths.js)
+    return gulp.src(paths.js)
         .on('error', console.log)
         .pipe(uglify())
         .pipe(rename('sa-filter-bootstrap.js'))
@@ -38,4 +39,6 @@ gulp.task('styles', function () {
         .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('build', ['scripts', 'styles']);
+const build = gulp.parallel('scripts', 'styles');
+gulp.task('build', build);
+export default build;

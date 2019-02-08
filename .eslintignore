@@ -1,0 +1,5 @@
+**/*.min.js
+**/dist/
+/_gh_pages/
+/js/coverage/
+/package.js
