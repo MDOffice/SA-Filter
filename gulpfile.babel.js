@@ -7,8 +7,8 @@ import uglify from 'gulp-uglify';
 
 //  PATHS
 const paths = {
-    js: './src/js/*.js',
-    css: 'src/css/*.css'
+    js: './src/*.js',
+    css: 'src/*.css'
 };
 
 //  TASKS

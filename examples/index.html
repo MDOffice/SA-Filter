@@ -1,0 +1,68 @@
+<html>
+<head>
+    <title>SA-Filter-Bootstrap 3 Examples</title>
+
+    <link rel="stylesheet" href="../lib/bootstrap3.css" media="all">
+    <link rel="stylesheet" href="../lib/bootstrap-datepicker3.css" media="all">
+    <link href="../dist/sa-filter-bootstrap3.min.css" rel="stylesheet">
+
+</head>
+<body>
+<h1>SA-Filter-Bootstrap 3 Examples</h1>
+
+<header class="filters clearfix">
+    <form id="cert-filter" action="#" class="form-inline">
+        <div class="sa-filter dropdown sa-filter-date"
+             data-clear="Очистити"
+             data-title="Дата"
+             data-ALL="Будь-яка"
+             data-name="p_date"
+             data-btn-class=""
+             data-value=""
+             data-min="Початок періоду"
+             data-max="Кінець періоду"
+             data-submit="alert('submit')"
+             data-submit-text="Застосувати">
+            <select name="p_date" class="multi-select" multiple title="Date">
+                <option value="today">за сьогодні</option>
+                <option value="week">за тиждень</option>
+                <option value="month">за місяць</option>
+            </select>
+        </div>
+        <div class="sa-filter dropdown sa-filter-date"
+             data-clear="Очистити"
+             data-title="Дата"
+             data-ALL="Будь-яка"
+             data-name="p_date"
+             data-btn-class=""
+             data-value=""
+             data-min="Початок періоду"
+             data-max="Кінець періоду">
+        </div>
+        <!--<div class="sa-filter dropdown sa-filter-multiselect"
+             data-clear="Очистити"
+             data-search="Назва"
+             data-title="Статус"
+             data-btn-class=""
+             data-nomatch="Немає збігів"
+             data-ALL="Будь-які"
+             data-submit="alert('submit')"
+             data-submit-text="Застосувати">
+            <select name="p_status" class="multi-select" multiple title="Status">
+                <option value="nowork" selected>Не дійсний</option>
+                <option value="work">Дійсний</option>
+                <option value="anul">Анульований</option>
+            </select>
+        </div>-->
+    </form>
+</header>
+
+<script src="../lib/jquery-3.3.1.js"></script>
+<script src="../lib/bootstrap3.js"></script>
+<script src="../lib/bootstrap-datepicker.js"></script>
+
+<script src="../dist/sa-filter-bootstrap3.min.js"></script>
+
+
+</body>
+</html>
