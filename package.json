@@ -1,29 +1,33 @@
 {
-    "name": "sa-filter-bootstrap",
-    "version": "0.1.24",
-    "private": true,
-    "scripts": {
-        "build": "gulp build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/kelatev/SA-Filter.git"
-    },
-    "author": "Kelatev",
-    "devDependencies": {
-        "@babel/core": "^7.2.2",
-        "@babel/preset-env": "^7.3.1",
-        "@babel/register": "^7.0.0",
-        "babel-eslint": "^10.0.1",
-        "eslint": "^5.13.0",
-        "gulp": "^4.0.0",
-        "gulp-babel": "^8.0.0",
-        "gulp-concat": "^2.6.1",
-        "gulp-concat-css": "^2.3.0",
-        "gulp-csscomb": "^3.0.8",
-        "gulp-csso": "^2.0.0",
-        "gulp-rename": "^1.2.3",
-        "gulp-uglify": "^3.0.1",
-        "path": "^0.12.7"
-    }
+  "name": "sa-filter-bootstrap",
+  "version": "0.1.24",
+  "private": true,
+  "main": "/dist/js/sa-filter-bootstrap.min.js",
+  "scripts": {
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kelatev/SA-Filter.git"
+  },
+  "author": "Kelatev",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-csso": "^2.0.0",
+    "gulp-rename": "^1.2.3",
+    "gulp-uglify": "^3.0.1",
+    "path": "^0.12.7"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
 }
