@@ -11,8 +11,8 @@ export default class DateRangeComponent extends Component {
         this.setOptions();
 
         this.createBlocks();
-        this.assignEvent();
-        this.additionRender();
+        this._assignEvent();
+        this._additionRender();
     }
 
     setOptions() {
@@ -47,14 +47,14 @@ export default class DateRangeComponent extends Component {
         this.addComponent(this.blockSingleSelect);
     }
 
-    assignEvent() {
+    _assignEvent() {
         let instance = this;
         this.component.on('shown.bs.dropdown', function () {
             instance.blockSingleSelect.refresh();
         });
     }
 
-    additionRender() {
+    _additionRender() {
         this.component.append(this.blockDateRange.renderInput());
     }
 

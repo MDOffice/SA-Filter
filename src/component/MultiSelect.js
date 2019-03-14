@@ -5,10 +5,10 @@ export default class MultiSelectComponent extends Component {
 
     constructor(component) {
         super(component);
-        this.setOptions();
 
+        this.setOptions();
         this.createBlocks();
-        this.assignEvents();
+        this._assignEvents();
     }
 
     setOptions() {
@@ -52,7 +52,7 @@ export default class MultiSelectComponent extends Component {
         this.addComponent(this.blockMultiSelect);
     }
 
-    assignEvents() {
+    _assignEvents() {
         let instance = this;
         $(instance.component)
             .on('shown.bs.dropdown', function () {

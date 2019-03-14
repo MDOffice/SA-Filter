@@ -5,7 +5,6 @@ export default class SingleSelectComponent extends Component {
 
     constructor(component) {
         super(component);
-        this.setOptions();
 
         /*this.options.elements.bind("updateOptions", function() {
             instance._setOptions(options)
@@ -16,8 +15,9 @@ export default class SingleSelectComponent extends Component {
         }).bind("clear", function() {
             instance.clear()
         });*/
+        this.setOptions();
         this.createBlocks();
-        this.assignEvents();
+        this._assignEvents();
     }
 
     setOptions() {
@@ -59,7 +59,7 @@ export default class SingleSelectComponent extends Component {
         this.addComponent(this.blockSingleSelect);
     }
 
-    assignEvents() {
+    _assignEvents() {
         let instance = this;
         $(instance.component)
             .on('shown.bs.dropdown', function () {

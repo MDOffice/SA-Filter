@@ -5,10 +5,10 @@ export default class NumRangeComponent extends Component {
 
     constructor(component) {
         super(component);
-        this.setOptions();
 
+        this.setOptions();
         this.createBlocks();
-        this._render();
+        this._additionRender();
     }
 
     setOptions() {
@@ -36,7 +36,7 @@ export default class NumRangeComponent extends Component {
         this.addComponent(this.blockNumRange);
     }
 
-    _render() {
+    _additionRender() {
         this.component.append(this.blockNumRange.renderInput());
     }
 }
