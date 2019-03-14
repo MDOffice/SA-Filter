@@ -1,4 +1,5 @@
 export default class Util {
+
     static clone(obj) {
         let copy;
 

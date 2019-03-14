@@ -1,6 +1,6 @@
 {
   "name": "sa-filter-bootstrap",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "main": "/dist/sa-filter-bootstrap3.js",
   "scripts": {

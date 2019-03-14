@@ -32,6 +32,12 @@ export default class List extends Block {
                 instance.handleChange(this);
             });
 
+        /*$(instance.container).on('click', '.select-list-item input, .check-list-item input', function (e) {
+            e.stopPropagation();
+            $(this).prop('checked', !this.checked);
+            instance.handleChange($(this).closest('.select-list-item, .check-list-item')[0]);
+        });*/
+
         $(instance.component)
             .on('click', '.clear-all', function (e) {
                 e.preventDefault();
@@ -65,7 +71,7 @@ export default class List extends Block {
             .val('');
         $(self)
             .addClass(icon_search)
-            .removeClass('clear-field ' + icon_clear);
+            .removeClass('clear-field ' + this.icon_clear);
         this.state.hide = this.props.hide || '0';
         this.refresh();
     }

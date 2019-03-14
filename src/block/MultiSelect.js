@@ -137,7 +137,8 @@ export default class MultiSelect extends List {
         this.initOptions.filter('[selected]')
             .attr('selected', false);
         if (!this.resetOption) {
-            this.resetOption = this.select.after($('<input type="hidden" name="' + this.name + '" value="null">'));
+            this.resetOption = $('<input type="hidden" name="' + this.name + '" value="null">');
+            this.select.after(this.resetOption);
         }
     }
 
