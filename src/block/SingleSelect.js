@@ -136,7 +136,7 @@ export default class SingleSelect extends List {
     }
 
     _templateListItem(props) {
-        return '<li class="select-list-item' + (props.active ? ' active' : '') + '" title="' + (props.title ? props.title : '') + '" data-value="' + props.value + '"><label class="item-label">' + props.label + '</label></li>';
+        return '<li class="select-list-item' + (props.active ? ' active' : '') + '" title="' + (props.title || '') + '" data-value="' + props.value + '"><label class="item-label">' + props.label + '</label></li>';
     }
 
 }

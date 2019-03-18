@@ -190,7 +190,7 @@ export default class MultiSelect extends List {
     }
 
     _templateListItem(props) {
-        return '<li class="check-list-item"><label class="item-label" title="' + props.title + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + '>' + props.label + '</label></li>';
+        return '<li class="check-list-item"><label class="item-label" title="' + (props.title || '') + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + '>' + props.label + '</label></li>';
     }
 
 }
