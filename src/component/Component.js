@@ -54,7 +54,7 @@ export default class Component {
                 submit: () => {
                     instance.props.onSubmit = true;
                     eval(instance.props.submit);
-                    $(instance.component)
+                    instance.component
                         .dropdown('toggle');
                 }
             }

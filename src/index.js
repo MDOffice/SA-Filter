@@ -1,5 +1,8 @@
 import './index.css';
 
+import 'jquery';
+import 'bootstrap';
+
 import SingleSelectComponent from './component/SingleSelect';
 import MultiSelectComponent from './component/MultiSelect';
 import NumRangeComponent from './component/NumRange';
