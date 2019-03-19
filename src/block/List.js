@@ -84,13 +84,13 @@ export default class List extends Block {
         if (findText.length < 0) {
             that.next()
                 .addClass(icon_search)
-                .removeClass('clear-field ' + icon_clear);
+                .removeClass('clear-field ' + this.icon_clear);
             instance.state.hide = this.props.hide || '0';
             instance.refresh();
         } else {
             that.next()
                 .removeClass(icon_search)
-                .addClass('clear-field ' + icon_clear);
+                .addClass('clear-field ' + this.icon_clear);
             let items = [],
                 is_active;
             if (instance.props.searchUrl) {

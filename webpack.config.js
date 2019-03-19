@@ -11,7 +11,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'sa-filter-bootstrap3.js',
-        library: 'sa_filter',
+        library: 'SAFilter',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
@@ -46,7 +46,7 @@ module.exports = {
     },
 
     externals: {
-        jquery: 'jQuery',
+        jquery: 'jquery',
         bootstrap: 'bootstrap'
     },
 

@@ -31,8 +31,7 @@ export default class DateRange extends Block {
             this.input.val(this.value);
         }
 
-        $(instance.component)
-            .find('.date-picker')
+        instance.component.find('.date-picker')
             .datepicker({
                 format: 'dd.mm.yyyy',
                 weekStart: 1,
@@ -41,10 +40,9 @@ export default class DateRange extends Block {
                 //language: str_lang
             });
 
-        $(instance.component)
-            .on('change', '.date-picker', function () {
-                instance.handleChange(this);
-            });
+        instance.component.on('change', '.date-picker', function () {
+            instance.handleChange(this);
+        });
     }
 
     handleChange(self) {

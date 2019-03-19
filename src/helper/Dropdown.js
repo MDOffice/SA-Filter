@@ -1,5 +1,5 @@
 import Trigger from './Trigger';
-import Util from './Util';
+import {clone, arraysEqual} from './utils';
 
 export default class Dropdown extends Trigger {
 
@@ -42,7 +42,7 @@ export default class Dropdown extends Trigger {
     }
 
     _setInitValue(block) {
-        let value = Util.clone(block.getValue());
+        let value = clone(block.getValue());
         if (value) {
             if ((value instanceof Array && value !== [])
                 || (typeof(value) === 'string' && value !== '')) {
@@ -77,7 +77,7 @@ export default class Dropdown extends Trigger {
         this.valueLabel = block.getValueLabel();
         this.valueTitle = block.getValueTitle();
 
-        this._showSubmit(!Util.arraysEqual(this.getInitValue(), value));//some error with many blocks
+        this._showSubmit(!arraysEqual(this.getInitValue(), value));//some error with many blocks
         this.trigger('change');
     }
 

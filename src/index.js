@@ -1,15 +1,19 @@
 import './index.css';
 
-import 'jquery';
+import $ from 'jquery';
 import 'bootstrap';
+
+import {getOpts} from './options/index';
+
+export {setDefaults} from './options/index';
 
 import SingleSelectComponent from './component/SingleSelect';
 import MultiSelectComponent from './component/MultiSelect';
 import NumRangeComponent from './component/NumRange';
 import DateRangeComponent from './component/DateRange';
 
-(function ($) {
-
+document.addEventListener('DOMContentLoaded', () => {
+//(function ($) {
     $('.sa-filter-select')
         .each(function () {
             new SingleSelectComponent(this);
@@ -30,4 +34,5 @@ import DateRangeComponent from './component/DateRange';
             new DateRangeComponent(this);
         });
 
-}(jQuery));
+//}(jQuery));
+});

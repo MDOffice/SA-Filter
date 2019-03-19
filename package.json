@@ -1,6 +1,6 @@
 {
   "name": "sa-filter-bootstrap",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "main": "/dist/sa-filter-bootstrap3.js",
   "scripts": {
     "dev": "webpack-dev-server --inline=false --progress --mode development --open",
