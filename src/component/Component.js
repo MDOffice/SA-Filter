@@ -53,7 +53,8 @@ export default class Component {
                 },
                 submit: () => {
                     instance.props.onSubmit = true;
-                    eval(instance.props.submit);
+                    const submitFunc = new Function('', instance.props.submit);
+                    submitFunc();
                     instance.component
                         .dropdown('toggle');
                 }
