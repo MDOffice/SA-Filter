@@ -70,7 +70,7 @@ export default class List extends Block {
             .prev()
             .val('');
         $(self)
-            .addClass(icon_search)
+            .addClass(this.icon_search)
             .removeClass('clear-field ' + this.icon_clear);
         this.state.hide = this.props.hide || '0';
         this.refresh();
@@ -83,13 +83,13 @@ export default class List extends Block {
                 .toLowerCase();
         if (findText.length < 0) {
             that.next()
-                .addClass(icon_search)
+                .addClass(this.icon_search)
                 .removeClass('clear-field ' + this.icon_clear);
             instance.state.hide = this.props.hide || '0';
             instance.refresh();
         } else {
             that.next()
-                .removeClass(icon_search)
+                .removeClass(this.icon_search)
                 .addClass('clear-field ' + this.icon_clear);
             let items = [],
                 is_active;
