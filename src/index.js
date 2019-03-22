@@ -2,10 +2,11 @@ import './index.css';
 
 import $ from 'jquery';
 import 'bootstrap';
+import 'bootstrap-datepicker';
 
-import {getOpts} from './options/index';
+//import {getOpts} from './options/index';
 
-export {setDefaults} from './options/index';
+//export {setDefaults} from './options/index';
 
 import SingleSelectComponent from './component/SingleSelect';
 import MultiSelectComponent from './component/MultiSelect';

@@ -1,11 +1,13 @@
-
 {
-  "presets": [
-    [
-      "@babel/env",
-      {
-        "useBuiltIns": "entry"
-      }
+    "presets": [
+        [
+            "@babel/env",
+            {
+                "useBuiltIns": "entry"
+            }
+        ]
+    ],
+    "plugins": [
+        "transform-es2015-modules-commonjs"
     ]
-  ]
 }
