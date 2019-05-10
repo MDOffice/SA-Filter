@@ -1,8 +1,8 @@
 import './index.css';
 
 import $ from 'jquery';
-import 'bootstrap';
-import 'bootstrap-datepicker';
+//import 'bootstrap';
+//import 'bootstrap-datepicker';
 
 //import {getOpts} from './options/index';
 
@@ -12,6 +12,13 @@ import SingleSelectComponent from './component/SingleSelect';
 import MultiSelectComponent from './component/MultiSelect';
 import NumRangeComponent from './component/NumRange';
 import DateRangeComponent from './component/DateRange';
+
+/*module.exports = {
+    SingleSelect: SingleSelectComponent,
+    MultiSelect: MultiSelectComponent,
+    NumRange: NumRangeComponent,
+    DateRange: DateRangeComponent
+};*/
 
 document.addEventListener('DOMContentLoaded', () => {
 //(function ($) {

@@ -36,13 +36,16 @@ export default class DateRange extends Block {
                 format: 'dd.mm.yyyy',
                 weekStart: 1,
                 autoclose: true,
-                language: 'ua'
-                //language: str_lang
+                language: 'ua',
+                //language: str_lang,
+                changeDate: function(){
+                    instance.handleChange(this);
+                }
             });
 
-        instance.component.on('change', '.date-picker', function () {
+        /*instance.component.on('change', '.date-picker', function () {
             instance.handleChange(this);
-        });
+        });*/
     }
 
     handleChange(self) {

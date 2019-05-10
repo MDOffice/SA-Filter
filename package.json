@@ -1,9 +1,9 @@
 {
   "name": "sa-filter-bootstrap",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "main": "/dist/sa-filter-bootstrap3.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline=false --progress --mode development --open",
+    "dev": "webpack-dev-server --inline --progress --mode development --open",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
@@ -16,26 +16,26 @@
   },
   "author": "Kelatev",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-transform-modules-umd": "^7.2.0",
+    "@babel/preset-env": "^7.4.4",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "css-loader": "^2.1.1",
-    "eslint": "^5.15.1",
+    "eslint": "^5.16.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^3.0.1",
-    "jest": "^24.5.0",
+    "jest": "^24.8.0",
     "path": "^0.12.7",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
     "bootstrap": "^3.4.1",
     "bootstrap-datepicker": "^1.8.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "prop-types": "^15.7.2"
   }
 }
