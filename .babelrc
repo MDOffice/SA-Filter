@@ -6,8 +6,8 @@
                 "useBuiltIns": "entry"
             }
         ]
-    ],
+    ]/*,
     "plugins": [
         "@babel/plugin-transform-modules-umd"
-    ]
+    ]*/
 }

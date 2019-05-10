@@ -1,8 +1,7 @@
 import './index.css';
 
 import $ from 'jquery';
-//import 'bootstrap';
-//import 'bootstrap-datepicker';
+import 'bootstrap';
 
 //import {getOpts} from './options/index';
 
@@ -13,15 +12,8 @@ import MultiSelectComponent from './component/MultiSelect';
 import NumRangeComponent from './component/NumRange';
 import DateRangeComponent from './component/DateRange';
 
-/*module.exports = {
-    SingleSelect: SingleSelectComponent,
-    MultiSelect: MultiSelectComponent,
-    NumRange: NumRangeComponent,
-    DateRange: DateRangeComponent
-};*/
-
 document.addEventListener('DOMContentLoaded', () => {
-//(function ($) {
+
     $('.sa-filter-select')
         .each(function () {
             new SingleSelectComponent(this);
@@ -41,6 +33,4 @@ document.addEventListener('DOMContentLoaded', () => {
         .each(function () {
             new DateRangeComponent(this);
         });
-
-//}(jQuery));
 });

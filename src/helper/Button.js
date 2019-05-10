@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 class Button {
 
     constructor(props) {
@@ -43,16 +41,5 @@ class Button {
         return html;
     }
 }
-
-Button.propTypes = {
-    id: PropTypes.string,
-    is_subtle: PropTypes.string,
-    className: PropTypes.string,
-    title: PropTypes.string,
-    label: PropTypes.string,
-    labelAlways: PropTypes.string,
-    labelAll: PropTypes.string,
-    labelValue: PropTypes.string
-};
 
 export default Button;
