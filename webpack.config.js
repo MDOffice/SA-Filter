@@ -45,8 +45,7 @@ module.exports = [
 
         externals: {
             jquery: 'jQuery',
-            bootstrap: 'bootstrap',
-            'bootstrap-datepicker': 'bootstrap-datepicker'
+            bootstrap: 'bootstrap'
         },
 
         plugins: [
@@ -59,11 +58,13 @@ module.exports = [
 
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: 'sa-filter-bootstrap3.bundle.js'
+            filename: 'sa-filter-bootstrap3.bundle.js',
+            library: 'SAFilter',
         },
 
         externals: {
-            jquery: 'jquery'
+            jquery: 'jquery',
+            bootstrap: 'bootstrap'
         },
 
         plugins: [
