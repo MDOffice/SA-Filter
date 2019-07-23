@@ -2,29 +2,29 @@ import Trigger from '../helper/Trigger';
 
 export default class Block extends Trigger {
 
-    validValue(value) {
+    validValue(value: any): boolean {
         return false;
     }
 
-    setValue(value) {
+    setValue(value: any): void {
     }
 
-    setEmptyValue() {
+    setEmptyValue(): void {
     }
 
-    getValue() {
+    getValue(): any {
         return null;
     }
 
-    getValueLabel() {
+    getValueLabel(): any {
         return null;
     }
 
-    getValueTitle() {
+    getValueTitle(): any {
         return null;
     }
 
-    render() {
+    render(): any {
         return null;
     }
 }

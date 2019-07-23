@@ -1,4 +1,4 @@
-export default class Trigger {
+class Trigger {
     constructor() {
         this.triggers = {};
     }
@@ -11,9 +11,9 @@ export default class Trigger {
     }
 
     on(action, callback) {
-        if (typeof action === 'object') {
+        if (typeof action === "object") {
             let instance = this;
-            $.each(action, function (t, c) {
+            $.each(action, function(t, c) {
                 instance._setTrigger(t, c);
             });
         } else {
@@ -23,13 +23,15 @@ export default class Trigger {
 
     trigger(action) {
         //console.log('Trigger.trigger("' + action + '")');
-        let currentAction = this.triggers[action];
-        if (currentAction) {
-            for (let i in currentAction) {
-                if (currentAction.hasOwnProperty(i)) {
-                    currentAction[i]();
+        let callbackList = this.triggers[action];
+        if (callbackList) {
+            for (let callback in callbackList) {
+                if (callbackList.hasOwnProperty(callback)) {
+                    callbackList[callback]();
                 }
             }
         }
     }
 }
+
+export default Trigger;
