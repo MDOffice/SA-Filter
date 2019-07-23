@@ -1,4 +1,4 @@
-import Button from '../helper/Button';
+import Button from '../helper/Button.js';
 import Dropdown from '../helper/Dropdown';
 
 export default class Component {

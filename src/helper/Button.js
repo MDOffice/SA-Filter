@@ -1,4 +1,4 @@
-class Button {
+export default class Button {
 
     constructor(props) {
         this.props = props;//id, is_subtle, title, label, labelAlways, labelAll
@@ -41,5 +41,3 @@ class Button {
         return html;
     }
 }
-
-export default Button;
