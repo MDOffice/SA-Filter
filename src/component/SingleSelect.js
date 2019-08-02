@@ -5,15 +5,6 @@ export default class SingleSelectComponent extends Component {
     constructor(component) {
         super(component);
 
-        /*this.options.elements.bind("updateOptions", function() {
-            instance._setOptions(options)
-        }).bind("selectOption", function(e, descriptor) {
-            instance.selectItem(descriptor)
-        }).bind("removeOption", function(e, descriptor) {
-            instance.unselectItem(descriptor)
-        }).bind("clear", function() {
-            instance.clear()
-        });*/
         this.setOptions();
         this.createBlocks();
         this._assignEvents();

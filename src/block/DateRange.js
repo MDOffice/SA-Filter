@@ -84,7 +84,7 @@ export default class DateRange extends Block {
             alert(this.error_date);
         } else {
             this.setValue(newMinValue + (newMinValue || newMaxValue ? ',' : '') + newMaxValue);
-            this.trigger('change');
+            this.emit('change');
         }
     }
 

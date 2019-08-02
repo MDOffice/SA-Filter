@@ -1,6 +1,6 @@
-import Trigger from '../helper/Trigger';
+import {EventEmitter} from 'events';
 
-export default class Block extends Trigger {
+export default class Block extends EventEmitter {
 
     validValue(value: any): boolean {
         return false;

@@ -63,7 +63,7 @@ export default class MultiSelect extends List {
         } else {
             this.setValue(value, selected);
         }
-        this.trigger('change');
+        this.emit('change');
     }
 
     validValue(value) {

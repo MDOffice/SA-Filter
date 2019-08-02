@@ -1,5 +1,4 @@
-
-import Button from '../helper/Button.js';
+import Button from '../helper/Button';
 import Dropdown from '../helper/Dropdown';
 
 class Component {

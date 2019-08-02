@@ -1,84 +1,94 @@
-const webpack = require("webpack");
-const merge = require("webpack-merge");
-const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 //import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const common = {
-    entry: "./src/index.js",
+    entry: './src/index.js',
 
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "ts-loader",
+                use: 'ts-loader',
                 exclude: /node_modules/
             },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: 'babel-loader'
                 }
             },
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader"
-                })
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
             }
         ]
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: ['.tsx', '.ts', '.js']
+    },
+
+    devServer: {
+        contentBase: [
+            path.join(__dirname, 'examples'),
+            path.join(__dirname, 'lib'),
+            path.join(__dirname, 'dist')
+        ],
+        compress: true
     }
 };
 
 module.exports = [
     merge(common, {
         output: {
-            path: path.resolve(__dirname, "dist"),
-            filename: "sa-filter-bootstrap3.js",
-            library: "SAFilter",
-            libraryTarget: "umd",
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'main.js',
+            library: 'SAFilter',
+            libraryTarget: 'umd',
             umdNamedDefine: true
         },
 
-        devServer: {
-            openPage: "examples"
-            //contentBase: path.join(__dirname, 'examples')
-        },
-
         externals: {
-            jquery: "jQuery",
-            bootstrap: "bootstrap"
+            jquery: 'jQuery',
+            bootstrap: 'bootstrap',
+            events: 'EventEmitter'
         },
 
         plugins: [
-            new ExtractTextPlugin("./sa-filter-bootstrap3.css"),
+            new MiniCssExtractPlugin({
+                filename: './main.css'
+            }),
             new webpack.ProvidePlugin({
-                $: "jquery"
+                $: 'jquery'
             })
         ]
     }),
     merge(common, {
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: 'sa-filter-bootstrap3.bundle.js',
+            filename: 'main.bundle.js',
             library: 'SAFilter'
         },
 
         externals: {
-            jquery: "jquery",
-            bootstrap: "bootstrap"
+            jquery: 'jquery',
+            bootstrap: 'bootstrap',
+            events: 'events'
         },
 
         plugins: [
-            new ExtractTextPlugin("./sa-filter-bootstrap3.css"),
+            new MiniCssExtractPlugin({
+                filename: './main.css'
+            }),
             new webpack.ProvidePlugin({
-                $: "jquery"
+                $: 'jquery'
             })
         ]
     })

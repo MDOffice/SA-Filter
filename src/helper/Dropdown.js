@@ -1,7 +1,7 @@
-import Trigger from './Trigger';
+import {EventEmitter} from 'events';
 import {clone, arraysEqual} from './utils';
 
-export default class Dropdown extends Trigger {
+export default class Dropdown extends EventEmitter {
 
     constructor(props) {
         super();
@@ -22,7 +22,7 @@ export default class Dropdown extends Trigger {
 
         instance.initValue = '';
         instance.component.on('click', '.submit-footer', function () {
-            instance.trigger('submit');
+            instance.emit('submit');
         });
     }
 
@@ -51,7 +51,7 @@ export default class Dropdown extends Trigger {
                     this.value = value;
                     this.valueLabel = block.getValueLabel();
                     this.valueTitle = block.getValueTitle();
-                    this.trigger('change');
+                    this.emit('change');
                 }
             }
         }
@@ -78,7 +78,7 @@ export default class Dropdown extends Trigger {
         this.valueTitle = block.getValueTitle();
 
         this._showSubmit(!arraysEqual(this.getInitValue(), value));//some error with many blocks
-        this.trigger('change');
+        this.emit('change');
     }
 
     resetToInitValue() {
