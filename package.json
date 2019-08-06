@@ -1,6 +1,6 @@
 {
   "name": "@sa-filter/bootstrap3",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "main": "/dist/main.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --mode development --open",
@@ -23,7 +23,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
-    "css-loader": "^3.1.0",
+    "css-loader": "^3.2.0",
     "eslint": "^6.1.0",
     "file-loader": "^4.1.0",
     "jest": "^24.8.0",
@@ -32,14 +32,14 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.0.2",
     "typescript": "^3.5.2",
-    "webpack": "^4.31.0",
+    "webpack": "^4.39.1",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1",
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@types/jquery": "^3.3.30",
-    "@types/react": "^16.8.23",
+    "@types/jquery": "^3.3.31",
+    "@types/react": "^16.8.24",
     "@types/react-dom": "^16.8.4",
     "bootstrap": "^3.4.1",
     "core-js": "^3.1.4",
