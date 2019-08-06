@@ -34,6 +34,7 @@ export default class DateRangeComponent extends Component {
                 'min': this.props.title_min,
                 'max': this.props.title_max
             },
+            'clearTitle': this.props.clear_text,
             'error_date': 'Дата початку не може бути більше закінчення'
         });
         this.addComponent(this.blockDateRange);

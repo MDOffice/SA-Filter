@@ -5,6 +5,8 @@ export default class DateRange extends Block {
     constructor(props) {
         super();
 
+        this.props = props;
+
         this.name = props.name;
         this.value = props.value || '';
         this.title = {
@@ -29,6 +31,8 @@ export default class DateRange extends Block {
             this.component.find('#date-' + this.name + '-max')
                 .val(max);
             this.input.val(this.value);
+
+            instance.component.prepend(this._templateClear());
         }
 
         instance.component.find('.date-picker')
@@ -41,6 +45,13 @@ export default class DateRange extends Block {
             })
             .on('changeDate', function () {
                 instance.handleChange(this);
+            });
+
+        $(instance.component)
+            .on('click', '.clear-all', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                instance.handleClear();
             });
 
         /*instance.component.on('change', '.date-picker', function () {
@@ -86,6 +97,12 @@ export default class DateRange extends Block {
             this.setValue(newMinValue + (newMinValue || newMaxValue ? ',' : '') + newMaxValue);
             this.emit('change');
         }
+    }
+
+    handleClear() {
+        this.setValue(null);
+        this.setEmptyValue();
+        this.emit('change');
     }
 
     validValue(value) {
@@ -141,6 +158,16 @@ export default class DateRange extends Block {
 
     renderInput() {
         return this.input;
+    }
+
+    _templateClear() {
+        if (this.props.clearTitle) {
+            return (
+                '<li class="sa-filter-group-actions"><a href="#" class="clear-all">' +
+                this.props.clearTitle +
+                '</a></li>'
+            );
+        }
     }
 
     _template() {

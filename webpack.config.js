@@ -11,16 +11,9 @@ const common = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.js$/,
+                test: /\.(ts|tsx|js|jsx)?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
+                loader: 'babel-loader?cacheDirectory=true'
             },
             {
                 test: /\.css$/,

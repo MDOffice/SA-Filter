@@ -3,10 +3,11 @@
         [
             "@babel/env",
             {
-                "useBuiltIns": "entry",
-                "corejs": 3
+                "useBuiltIns": false
             }
-        ]
+        ],
+        "@babel/typescript",
+        "@babel/preset-react"
     ]/*,
     "plugins": [
         "@babel/plugin-transform-modules-umd"

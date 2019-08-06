@@ -1,7 +1,8 @@
-import {EventEmitter} from 'events';
+//import {EventEmitter} from 'events';
+import Trigger from './Trigger';
 import {clone, arraysEqual} from './utils';
 
-export default class Dropdown extends EventEmitter {
+export default class Dropdown extends Trigger {
 
     constructor(props) {
         super();
