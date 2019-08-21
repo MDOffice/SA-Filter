@@ -1,6 +1,6 @@
 {
   "name": "@sa-filter/bootstrap3",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "main": "/dist/main.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --mode development --open",
