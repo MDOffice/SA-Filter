@@ -42,7 +42,7 @@ module.exports = [
     merge(common, {
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: 'main.js',
+            filename: 'main.umd.js',
             library: 'SAFilter',
             libraryTarget: 'umd',
             umdNamedDefine: true
@@ -66,8 +66,10 @@ module.exports = [
     merge(common, {
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: 'main.bundle.js',
-            library: 'SAFilter'
+            filename: 'main.js',
+            library: 'SAFilter',
+            libraryTarget: 'umd',
+            umdNamedDefine: true
         },
 
         externals: {
