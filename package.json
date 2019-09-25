@@ -1,7 +1,8 @@
 {
-    "name": "sa-filter",
+    "name": "@kelatev/sa-filter",
     "version": "1.1.0",
     "author": "Kelatev",
+    "license": "MIT",
     "main": "/dist/main.js",
     "public": true,
     "scripts": {
@@ -14,7 +15,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/kelatev/SA-Filter.git"
+        "url": "git@github.com:kelatev/SA-Filter.git"
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/"
