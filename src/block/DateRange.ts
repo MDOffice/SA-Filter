@@ -71,9 +71,9 @@ export default class DateRange extends Block<string> implements DateInterface {
                 this.handleClear();
             });
 
-        /*this.component.on('change', '.date-picker', () => {
+        this.component.on('change', '.date-picker', () => {
             this.handleChange();
-        });*/
+        });
     }
 
     handleChange() {
