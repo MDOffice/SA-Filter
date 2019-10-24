@@ -1,5 +1,5 @@
-export const clone = (obj) => {
-    let copy;
+export const clone = (obj: any | null) => {
+    let copy: any;
 
     // Handle the 3 simple types, and null or undefined
     if (null == obj || 'object' != typeof obj) {
@@ -36,7 +36,7 @@ export const clone = (obj) => {
     throw new Error('Unable to copy obj! Its type isn\'t supported.');
 };
 
-export const arraysEqual = (a, b) => {
+export const arraysEqual = (a: string | string[] | null, b: string | string[] | null) => {
     if (a === b) {
         return true;
     }
@@ -58,7 +58,7 @@ export const arraysEqual = (a, b) => {
     return true;
 };
 
-export const throwErr = (message) => {
+export const throwErr = (message: string) => {
     // Remove multiple spaces:
     message = message.replace(/ +(?= )/g, '');
     message = message.trim();
@@ -69,7 +69,7 @@ export const throwErr = (message) => {
 /*
  * Match plain objects ({}) but NOT null
  */
-export const isPlainObject = (value) => {
+export const isPlainObject = (value: any) => {
     if (Object.prototype.toString.call(value) !== '[object Object]') {
         return false;
     } else {
@@ -78,7 +78,7 @@ export const isPlainObject = (value) => {
     }
 };
 
-export const ordinalSuffixOf = (num) => {
+export const ordinalSuffixOf = (num: number) => {
     let j = num % 10;
     let k = num % 100;
 

@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 //import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const common = {
-    entry: './src/index.js',
+    entry: './src/index.ts',
 
     module: {
         rules: [

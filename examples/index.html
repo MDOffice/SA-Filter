@@ -64,6 +64,21 @@
                 <option value="anul">Анульований</option>
             </select>
         </div>
+        <div class="sa-filter dropdown sa-filter-select"
+             data-clear="Очистити"
+             data-search="Назва"
+             data-title="Статус"
+             data-btn-class=""
+             data-nomatch="Немає збігів"
+             data-ALL="Будь-які"
+             data-submit="alert('submit')"
+             data-submit-text="Застосувати">
+            <select name="p_status2" class="select" title="Status">
+                <option value="nowork" selected>Не дійсний</option>
+                <option value="work">Дійсний</option>
+                <option value="anul">Анульований</option>
+            </select>
+        </div>
     </form>
 </header>
 
@@ -79,6 +94,24 @@
 <script src="bootstrap-datepicker.js"></script>
 
 <script src="main.umd.js"></script>
+<script>
+    SAFilter.setDefaults({
+        initDatepicker: function(datePickerElement, onChangeCallback) {
+            $(datePickerElement)
+                .datepicker({
+                    format: 'dd.mm.yyyy',
+                    weekStart: 1,
+                    autoclose: true,
+                    language: 'ua',
+                    clearBtn: true
+                })
+                .on('changeDate', function() {
+                    console.log('datepicker.changeDate');
+                    onChangeCallback();
+                });
+        }
+    });
+</script>
 
 
 </body>

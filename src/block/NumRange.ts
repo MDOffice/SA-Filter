@@ -1,8 +1,32 @@
-import Block from './Block';
+import Block, { BlockInterface } from './Block';
 
-export default class NumRange extends Block {
+interface NumRangeTitleProps {
+    min: string
+    max: string
+}
 
-    constructor(props) {
+export interface NumRangeInterface extends BlockInterface<string> {
+    renderInput(): JQuery;
+}
+
+export interface NumRangeProps {
+    name: string
+    value?: string
+    title: NumRangeTitleProps
+    error_date: string,
+    clearTitle?: string
+}
+
+export default class NumRange extends Block<string> implements NumRangeInterface {
+
+    props: NumRangeProps;
+    name: string;
+    value: string;
+    title: NumRangeTitleProps;
+    error_date: string;
+    input: JQuery;
+
+    constructor(props: NumRangeProps) {
         super();
 
         this.name = props.name;
@@ -32,12 +56,12 @@ export default class NumRange extends Block {
         }
 
         $(instance.component)
-            .on('keyup', 'input.text', function () {
+            .on('keyup', 'input.text', function() {
                 instance.handleChange(this);
             });
     }
 
-    handleChange(self) {
+    handleChange(self: HTMLElement) {
         let that = $(self),
             fieldCurrType = that.attr('id') === 'num-' + this.name + '-min' ? 'min' : 'max';
 
@@ -53,9 +77,9 @@ export default class NumRange extends Block {
         }
 
         if (fieldCurrType === 'min') {
-            newMinValue = that.val();
+            newMinValue = String(that.val());
         } else {
-            newMaxValue = that.val();
+            newMaxValue = String(that.val());
         }
 
         /*if (newMinValue && newMaxValue && newMinValue > newMaxValue && this.error_date) {
@@ -69,11 +93,11 @@ export default class NumRange extends Block {
         //}
     }
 
-    validValue(value) {
+    validValue(value: string | null): boolean {
         return value.indexOf(',') > -1 || value === '';
     }
 
-    setValue(value) {
+    setValue(value: string | null): void {
         this.value = value || '';
         if (value === null) {
             this.component.find('input.text')
@@ -85,16 +109,16 @@ export default class NumRange extends Block {
         }
     }
 
-    setEmptyValue() {
+    setEmptyValue(): void {
         this.input.prop('disabled', false);
         this.input.val('null');
     }
 
-    getValue() {
+    getValue(): string | null {
         return this.value;
     }
 
-    getValueLabel() {
+    getValueLabel(): string | null {
         let value = this.value;
         if (this.validValue(value)) {
             let min = value.substr(0, value.indexOf(','));
@@ -112,19 +136,19 @@ export default class NumRange extends Block {
         return value;
     }
 
-    getValueTitle() {
+    getValueTitle(): string | null {
         return null;
     }
 
-    render() {
+    render(): JQuery {
         return this.component;
     }
 
-    renderInput() {
+    renderInput(): JQuery {
         return this.input;
     }
 
-    _template() {
+    _template(): string {
         let html = '';
         html += '<div class="form-body"><div class="field-group aui-field-workratio">';
         html += '<input name="' + this.name + '" type="hidden" disabled>';

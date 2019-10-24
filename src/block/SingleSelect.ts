@@ -1,13 +1,26 @@
-import List from './List';
+import List, { ListInterface, ListItemInterface, ListProps } from './List';
 
-class SingleSelectBlock extends List {
-    constructor(props) {
+export interface SingleSelectInterface extends ListInterface<string> {
+
+}
+
+export interface SingleSelectProps extends ListProps<string> {
+    exclude?: string
+    hidden?: string
+}
+
+export default class SingleSelectBlock extends List<string> implements SingleSelectInterface {
+
+    props: SingleSelectProps;
+    resetOption: JQuery;
+
+    constructor(props: SingleSelectProps) {
         super();
 
-        this.name = props.name;
-        this.value = props.value || '';
-        this.has_search = props.has_search;
         this.props = {
+            name: props.name,
+            value: props.value || '',
+            has_search: props.has_search,
             searchTitle: props.searchTitle,
             search_id: props.search_id || 'search',
             search_container: props.search_container,
@@ -17,55 +30,47 @@ class SingleSelectBlock extends List {
             exclude: props.exclude,
             hidden: props.hidden,
             hide: props.hide,
-            clear: props.clear == null ? true : props.clear
+            clearTitle: props.clearTitle,
+            initOptions: props.initOptions
         };
         this.state = {
             hide: props.hide
         };
-
-        this.clearTitle = props.clearTitle;
-        this.initOptions = props.options;
         this._init();
     }
 
-    handleChange(self) {
+    handleChange(self: HTMLElement) {
         let $a = $(self);
         let value = $a.attr('data-value');
         let no_found = true;
         //var selected = $a.hasClass('aui-dropdown2-checked');
 
-        $.each(this.elements, function (index, element) {
+        $.each(this.elements, function(index, element) {
             if (element.value === value) {
                 no_found = false;
             }
         });
         if (no_found) {
+            const newElementTitle = $a.attr('title');
+            const newElementLabel = $a.find('label')
+                .html();
             this.elements.push({
                 value: value,
-                title: $a.attr('title'),
-                label: $a.find('label')
-                    .html(),
+                title: newElementTitle,
+                label: newElementLabel,
                 active: true
             });
-            this.initOptions
+            this.props.initOptions
                 .parent()
-                .append(
-                    '<option value="' +
-                    value +
-                    '" title="' +
-                    $a.attr('title') +
-                    '">' +
-                    $a.find('label')
-                        .html() +
-                    '</option>'
-                );
+                .append(`<option value="${value}" title="${newElementTitle}">${newElementLabel}</option>`);
         }
+
 
         this.setValue(value);
         this.emit('change');
     }
 
-    validValue(value) {
+    validValue(value: string | null): boolean {
         return (
             this.container
                 .find('.select-list-item')
@@ -74,19 +79,19 @@ class SingleSelectBlock extends List {
         );
     }
 
-    setValue(value) {
+    setValue(value: string | null): void {
         let instance = this;
         if (this.resetOption) {
             this.resetOption.remove();
         }
-        this.value = value || '';
+        this.props.value = value || '';
         this.container
             .find('.select-list-item')
             .filter('.active')
             .removeClass('active');
 
-        $.each(this.elements, function (index, element) {
-            element.active = element.value === instance.value;
+        $.each(this.elements, function(index, element) {
+            element.active = element.value === instance.props.value;
         });
 
         if (value !== null) {
@@ -101,82 +106,73 @@ class SingleSelectBlock extends List {
             this.refresh();
         }
 
-        if (this.validValue(this.value)) {
+        if (this.validValue(this.props.value)) {
             //this.options.attr('selected', false);
-            //this.options.filter('[value="' + this.value + '"]').attr('selected', true);
-            this.initOptions.parent()
-                .val(this.value);
+            //this.options.filter('[value="' + this.props.value + '"]').attr('selected', true);
+            this.props.initOptions.parent()
+                .val(this.props.value);
         }
     }
 
-    setEmptyValue() {
+    setEmptyValue(): void {
         this.setValue(null);
         if (!this.resetOption) {
-            this.resetOption = this.initOptions
+            this.resetOption = this.props.initOptions
                 .parent()
                 .after(
                     $(
                         '<input type="hidden" name="' +
-                        this.name +
+                        this.props.name +
                         '" value="null">'
                     )
                 );
         }
     }
 
-    refresh(customItems) {
+    refresh(customItems?: ListItemInterface[]): void {
         let instance = this,
             $list = $(this._templateList());
 
         if (customItems) {
-            $.each(customItems, function (index, element) {
+            $.each(customItems, function(index, element) {
                 $list.append(instance._templateListItem(element));
             });
         } else {
             let need_clear = false;
-            $.each(this.elements, function (index, element) {
+            $.each(this.elements, function(index, element) {
                 if (element.active) {
                     need_clear = true;
                 }
                 $list.append(instance._templateListItem(element));
             });
 
-            if (need_clear && instance.props.clear) {
-                $list.prepend(this._templateListClear());
+            if (need_clear && instance.props.clearTitle != '') {
+                $list.prepend(this._templateClearButton());
             }
         }
 
         instance.container.empty();
-        instance.container.append($list);
+        if ($list.length > 0) {
+            instance.container.append($list);
+        }
 
         this.container.find('.more-criteria-footer')
             .remove();
         if (this.state.hide && this.state.hide !== '0') {
             this.container.append(
-                '<div class="more-criteria-footer">...' +
-                this.props.exclude +
-                ' <span class="hidden-no">' +
-                this.state.hide +
-                '</span> ' +
-                this.props.hidden +
-                '</div>'
+                `<div class="more-criteria-footer">...${this.props.exclude} <span class="hidden-no">${this.state.hide}</span> ${this.props.hidden}</div>`
             );
         }
+
     }
 
-    _templateListItem(props) {
+    _templateListItem(props: ListItemInterface): string {
         return (
-            '<li class="select-list-item' +
-            (props.active ? ' active' : '') +
-            '" title="' +
-            (props.title || '') +
-            '" data-value="' +
-            props.value +
-            '"><label class="item-label">' +
-            props.label +
-            '</label></li>'
+            `<li class="select-list-item${(props.active ? ' active' : '')}" title="${(props.title || '')}" data-value="${props.value}"><label class="item-label">${props.label}</label></li>`
         );
     }
-}
 
-export default SingleSelectBlock;
+
+
+
+    }

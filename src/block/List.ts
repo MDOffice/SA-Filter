@@ -1,17 +1,53 @@
-import Block from './Block';
+import Block, { BlockInterface } from './Block';
 
 const iconSearch = 'icon-search4';
 const iconClear = 'icon-cancel-circle2';
 
-class List extends Block {
+
+export interface ListItemInterface {
+    value: string
+    label: string
+    title?: string
+    active: boolean
+}
+
+export interface ListInterface<T> extends BlockInterface<T> {
+    refresh(items?: ListItemInterface[]): void;
+}
+
+export interface ListProps<T> {
+    name?: string;
+    value: T;
+    has_search?: boolean;
+    search_id?: string
+    hide?: string | number
+    searchUrl?: string
+    searchUrlCache?: string
+    nomatchText?: string
+    search_container?: string
+    searchTitle?: string
+    clearTitle?: string | null;
+    initOptions?: JQuery
+}
+
+export interface ListState {
+    hide: string | number
+}
+
+class List<T> extends Block<T> implements ListInterface<T> {
+
+    props: ListProps<T>;
+    state: ListState;
+    container: JQuery;
+    elements: ListItemInterface[];
 
     _init() {
         let instance = this;
-        instance.component = $(instance._template());
-        instance.container = instance.component.find('.sa-filter-list-scroll');
-        instance.elements = [];
+        this.component = $(instance._template());
+        this.container = instance.component.find('.sa-filter-list-scroll');
+        this.elements = [];
 
-        $.each(instance.initOptions, function () {
+        $.each(this.props.initOptions, function() {
             let that = $(this);
             instance.elements.push({
                 value: that.attr('value'),
@@ -20,13 +56,13 @@ class List extends Block {
                 active: that.prop('selected')
             });
         });
-        instance.refresh();
+        this.refresh();
 
         $(instance.container)
             .on(
                 'click',
                 '.select-list-item, .check-list-item',
-                function (e) {
+                function(e) {
                     e.preventDefault();
                     instance.handleChange(this);
                 }
@@ -39,14 +75,14 @@ class List extends Block {
         });*/
 
         $(instance.component)
-            .on('click', '.clear-all', function (e) {
+            .on('click', '.clear-all', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 instance.handleClear();
             });
 
         $(instance.component)
-            .on('click', '.clear-field', function () {
+            .on('click', '.clear-field', function() {
                 instance.handleSearchClear(this);
             });
 
@@ -54,13 +90,13 @@ class List extends Block {
             .on(
                 'keyup',
                 '#' + instance.props.search_id,
-                function () {
+                function() {
                     instance.handleSearchChange(this);
                 }
             );
     }
 
-    handleChange(self) {
+    handleChange(self: HTMLElement) {
     }
 
     handleClear() {
@@ -69,7 +105,7 @@ class List extends Block {
         this.refresh();
     }
 
-    handleSearchClear(self) {
+    handleSearchClear(self: HTMLElement) {
         $(self)
             .prev()
             .val('');
@@ -80,11 +116,10 @@ class List extends Block {
         this.refresh();
     }
 
-    handleSearchChange(self) {
+    handleSearchChange(self: HTMLElement) {
         let instance = this;
         let that = $(self),
-            findText = that.val()
-                .toLowerCase();
+            findText = String(that.val()).toLowerCase();
         if (findText.length < 0) {
             that.next()
                 .addClass(iconSearch)
@@ -95,10 +130,10 @@ class List extends Block {
             that.next()
                 .removeClass(iconSearch)
                 .addClass('clear-field ' + iconClear);
-            let items = [],
+            let items: ListItemInterface[] = [],
                 is_active;
             if (instance.props.searchUrl) {
-                let data = { q: findText };
+                let data: { q: string, cache?: number } = { q: findText };
                 if (
                     instance.props.searchUrlCache &&
                     instance.props.searchUrlCache == '1'
@@ -110,10 +145,10 @@ class List extends Block {
                     dataType: 'json',
                     data: data,
                     async: false,
-                    success: function (d) {
-                        $.each(d.items, function (index, element) {
+                    success: function(d) {
+                        $.each(d.items, function(index, element) {
                             is_active =
-                                instance.elements.filter(function (t) {
+                                instance.elements.filter(function(t) {
                                     return t.value === element.id && t.active;
                                 }).length === 1;
                             items.push({
@@ -126,7 +161,7 @@ class List extends Block {
                     }
                 });
             } else {
-                $.each(instance.elements, function (index, element) {
+                $.each(instance.elements, function(index, element) {
                     if (
                         element.label.toLowerCase()
                             .indexOf(findText) > -1 ||
@@ -154,33 +189,29 @@ class List extends Block {
         }
     }
 
-    getValue() {
-        return this.value;
+    getValue(): T {
+        return this.props.value;
     }
 
     getValueLabel() {
-        return $(this.elements)
-            .map(function () {
-                if (this.active) {
-                    return this.label ? this.label : this.value;
-                }
+        return this.elements
+            .filter(currentValue => currentValue.active)
+            .map((currentValue) => {
+                return currentValue.label ? currentValue.label : currentValue.value;
             })
-            .get()
             .join(', ');
     }
 
     getValueTitle() {
-        return $(this.elements)
-            .map(function () {
-                if (this.active) {
-                    return this.title ? this.title : this.label;
-                }
+        return this.elements
+            .filter(currentValue => currentValue.active)
+            .map((currentValue) => {
+                return currentValue.title ? currentValue.title : currentValue.label;
             })
-            .get()
             .join('\n');
     }
 
-    refresh(customItems) {
+    refresh(items?: ListItemInterface[]): void {
     }
 
     render() {
@@ -189,7 +220,7 @@ class List extends Block {
 
     _template() {
         let html = '';
-        html += this.has_search ? this._templateSearch() : '';
+        html += this.props.has_search ? this._templateSearch() : '';
         html +=
             '<div class="sa-filter-list" tabindex="-1"><div id="' +
             this.props.search_container +
@@ -197,7 +228,7 @@ class List extends Block {
         return html;
     }
 
-    _templateList(is_selected) {
+    _templateList(is_selected: boolean = false): string {
         return (
             '<ul class="aui-list-section' +
             (is_selected ? ' selected-group' : '') +
@@ -205,17 +236,17 @@ class List extends Block {
         );
     }
 
-    _templateListClear() {
-        if (this.clearTitle) {
+    _templateClearButton(): string {
+        if (this.props.clearTitle) {
             return (
                 '<li class="sa-filter-group-actions"><a href="#" class="clear-all">' +
-                this.clearTitle +
+                this.props.clearTitle +
                 '</a></li>'
             );
         }
     }
 
-    _templateSearch() {
+    _templateSearch(): string {
         return (
             '<div class="sa-filter-search">' +
             '<input autocomplete="off" aria-autocomplete="list" placeholder="' +

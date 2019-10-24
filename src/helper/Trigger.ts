@@ -1,4 +1,10 @@
-class Trigger {
+export interface TriggerInterface {
+    on(action: string | object, callback?: () => void): this;
+
+    emit(action: string): boolean;
+}
+
+export default class Trigger implements TriggerInterface {
     triggers: any[string];
 
     constructor() {
@@ -12,8 +18,8 @@ class Trigger {
         this.triggers[action].push(callback);
     }
 
-    on(action: string, callback: () => void): this {
-        if (typeof action === "object") {
+    on(action: string | object, callback?: () => void): this {
+        if (typeof action === 'object') {
             $.each(action, (t: string, c: () => void) => {
                 this._setTrigger(t, c);
             });
@@ -38,5 +44,3 @@ class Trigger {
         return success;
     }
 }
-
-export default Trigger;

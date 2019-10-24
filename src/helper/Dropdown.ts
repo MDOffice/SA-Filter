@@ -1,10 +1,40 @@
 //import {EventEmitter} from 'events';
-import Trigger from './Trigger';
-import {clone, arraysEqual} from './utils';
+import Trigger, { TriggerInterface } from './Trigger';
+import { clone, arraysEqual } from './utils';
 
-export default class Dropdown extends Trigger {
+export interface DropdownProps {
+    id: string
+    submitText: string
+}
 
-    constructor(props) {
+export interface DropdownInterface extends TriggerInterface {
+    addComponent(block: any): void;
+
+    resetToInitValue(): void;
+
+    getInitValue(): string | null | string[];
+
+    getValue(): string | null | string[];
+
+    getValueLabel(): string | null;
+
+    getValueTitle(): string | null;
+
+    render(): JQuery;
+}
+
+export default class Dropdown extends Trigger implements DropdownInterface {
+
+    props: DropdownProps;
+    blocks: any[];
+    component: JQuery;
+    container: JQuery;
+    initValue: string | null | string[];
+    value: string | null | string[];
+    valueLabel: string;
+    valueTitle: string;
+
+    constructor(props: DropdownProps) {
         super();
 
         this.props = {
@@ -22,31 +52,31 @@ export default class Dropdown extends Trigger {
         instance.container = instance.component.find('form');
 
         instance.initValue = '';
-        instance.component.on('click', '.submit-footer', function () {
+        instance.component.on('click', '.submit-footer', function() {
             instance.emit('submit');
         });
     }
 
-    addComponent(block) {
+    addComponent(block: any): void {
         let instance = this;
-        let block_id = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
+        let block_id: any = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
 
         this._setInitValue(block);
 
         this.blocks.push(block_id);
         this.blocks[block_id] = block;
         //this._setComponentValue(block_id);
-        block.on('change', function () {
+        block.on('change', function() {
             instance._setComponentValue(block_id);
         });
         this.container.append(block.render());
     }
 
-    _setInitValue(block) {
+    _setInitValue(block: any) {
         let value = clone(block.getValue());
         if (value) {
             if ((value instanceof Array && value !== [])
-                || (typeof(value) === 'string' && value !== '')) {
+                || (typeof (value) === 'string' && value !== '')) {
                 this.initValue = value;
                 if (block.validValue(value)) {
                     this.value = value;
@@ -58,7 +88,7 @@ export default class Dropdown extends Trigger {
         }
     }
 
-    _setComponentValue(block_id) {
+    _setComponentValue(block_id: any) {
         let block = this.blocks[block_id],
             value = block.getValue() || '';
         if (value !== '') {
@@ -82,7 +112,7 @@ export default class Dropdown extends Trigger {
         this.emit('change');
     }
 
-    resetToInitValue() {
+    resetToInitValue(): void {
         for (let i = 0, len = this.blocks.length; i < len; i++) {
             let block_id = this.blocks[i],
                 block = this.blocks[block_id];
@@ -93,27 +123,27 @@ export default class Dropdown extends Trigger {
         }
     }
 
-    getInitValue() {
+    getInitValue(): string | null | string[] {
         return this.initValue;
     }
 
-    getValue() {
+    getValue(): string | null | string[] {
         return this.value;
     }
 
-    getValueLabel() {
+    getValueLabel(): string | null {
         return this.valueLabel;
     }
 
-    getValueTitle() {
+    getValueTitle(): string | null {
         return this.valueTitle;
     }
 
-    render() {
+    render(): JQuery {
         return this.component;
     }
 
-    _showSubmit(visible) {
+    _showSubmit(visible: boolean) {
         /*var show = false;
         for (var i in this.submits) {
             if (this.submits[i].hasOwnProperty(i))
@@ -126,7 +156,7 @@ export default class Dropdown extends Trigger {
             .toggle(visible);
     }
 
-    _templateContainer() {
+    _templateContainer(): string {
         let html = '';
         html += '<div id="' + this.props.id + '" class="sa-filter-form  dropdown-menu">';
         html += '<form onsubmit="return false"></form>';
@@ -135,7 +165,7 @@ export default class Dropdown extends Trigger {
         return html;
     }
 
-    _templateSubmit() {
+    _templateSubmit(): string {
         let html = '';
         if (this.props.submitText) {
             html = '<div class="submit-footer" style="display: none">' + this.props.submitText + '</div>';

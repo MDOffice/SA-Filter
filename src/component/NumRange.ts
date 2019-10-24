@@ -1,10 +1,23 @@
-import Component from './Component';
-import NumRangeBlock from '../block/NumRange';
+import Component, { ComponentProps } from './Component';
+import NumRangeBlock, { NumRangeInterface } from '../block/NumRange';
+import { SAFilterOptions } from '../options/index';
+
+interface NumRangeProps extends ComponentProps {
+    name: string
+    value: string
+    title_min: string
+    title_max: string
+    clear_text: string
+}
 
 export default class NumRangeComponent extends Component {
 
-    constructor(component) {
-        super(component);
+    elements: JQuery;
+    props: NumRangeProps;
+    blockNumRange: NumRangeInterface;
+
+    constructor(component: Element, opts: SAFilterOptions) {
+        super(component, opts);
 
         this.setOptions();
         this.createBlocks();
@@ -25,13 +38,13 @@ export default class NumRangeComponent extends Component {
 
     createBlocks() {
         this.blockNumRange = new NumRangeBlock({
-            'name': this.props.name,
-            'value': this.props.value,
-            'title': {
-                'min': this.props.title_min,
-                'max': this.props.title_max
+            name: this.props.name,
+            value: this.props.value,
+            title: {
+                min: this.props.title_min,
+                max: this.props.title_max
             },
-            'error_date': 'Значення початку не може бути більше закінчення'
+            error_date: 'Значення початку не може бути більше закінчення'
         });
         this.addComponent(this.blockNumRange);
     }

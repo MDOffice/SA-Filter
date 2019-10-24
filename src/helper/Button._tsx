@@ -2,7 +2,6 @@ import * as React from "react";
 
 export interface ButtonProps {
     id: string
-    is_subtle: boolean
     className: string
     label: string
     labelValue: string
@@ -15,7 +14,7 @@ export class Button extends React.Component<ButtonProps> {
     render() {
         const has_value = this.props.labelValue && this.props.labelValue !== '';
         const showLabel = (!has_value || this.props.labelAlways) && this.props.label !== '';
-        let className = "btn btn-default btn-xs " + this.props.className + (this.props.is_subtle ? ' aui-button-subtle' : '');
+        let className = "btn btn-default btn-xs " + this.props.className;
 
         return <button type="button"
                        data-toggle="dropdown"

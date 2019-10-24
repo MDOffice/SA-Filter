@@ -1,31 +1,42 @@
-import {throwErr, isPlainObject, ordinalSuffixOf} from '../helper/utils';
+import { throwErr, isPlainObject, ordinalSuffixOf } from '../helper/utils';
 
-const defaultOpts = {
+export interface SAFilterOptions {
+    btn_class: string
+    title: string
+    title_always: boolean
+    ALL: string
+    clear_text: string
+    submit: string
+    submit_text: string
+    initDatepicker: (datePickerElement: JQuery, onChangeCallback: () => void) => void
+}
+
+export type SAFilterParams = (string|Partial<SAFilterOptions>)[];
+
+const defaultOpts: SAFilterOptions = {
+    btn_class: null,
     title: null,
-    text: null,
-    icon: null,
-    //buttons: defaultButtonList,
-    content: null,
-    className: null,
-    closeOnClickOutside: true,
-    closeOnEsc: true,
-    dangerMode: false,
-    timer: null
+    title_always: false,
+    ALL: null,
+    clear_text: null,
+    submit: null,
+    submit_text: null,
+    initDatepicker: null
 };
 
-let userDefaults = Object.assign({}, defaultOpts);
+let userDefaults: SAFilterOptions = Object.assign({}, defaultOpts);
 
-export const setDefaults = (opts) => {
+export const setDefaults = (opts: object): void => {
     userDefaults = Object.assign({}, defaultOpts, opts);
 };
 
-const indexToOrdinal = (index) => ordinalSuffixOf(index + 1);
+const indexToOrdinal = (index: number): string => ordinalSuffixOf(index + 1);
 
-const invalidParam = (param, index) => {
+const invalidParam = (param: any, index: number): void => {
     throwErr(`${indexToOrdinal(index)} argument ('${param}') is invalid`);
 };
 
-const expectOptionsOrNothingAfter = (index, allParams) => {
+const expectOptionsOrNothingAfter = (index: number, allParams: SAFilterParams): void => {
     let nextIndex = (index + 1);
     let nextParam = allParams[nextIndex];
 
@@ -34,7 +45,7 @@ const expectOptionsOrNothingAfter = (index, allParams) => {
     }
 };
 
-const expectNothingAfter = (index, allParams) => {
+const expectNothingAfter = (index: number, allParams: SAFilterParams): void => {
     let nextIndex = (index + 1);
     let nextParam = allParams[nextIndex];
 
@@ -43,7 +54,7 @@ const expectNothingAfter = (index, allParams) => {
     }
 };
 
-const paramToOption = (opts, param, index, allParams) => {
+const paramToOption = (opts: any, param: any, index: number, allParams: SAFilterParams): object => {
 
     const paramType = (typeof param);
     const isString = (paramType === 'string');
@@ -55,54 +66,42 @@ const paramToOption = (opts, param, index, allParams) => {
             return {
                 text: param
             };
-        }
-
-        else if (index === 1) {
+        } else if (index === 1) {
             // Example: swal("Wait!", "Are you sure you want to do this?");
             // (The text is now the second argument)
             return {
                 text: param,
                 title: allParams[0]
             };
-        }
-
-        else if (index === 2) {
+        } else if (index === 2) {
             // Example: swal("Wait!", "Are you sure?", "warning");
             expectOptionsOrNothingAfter(index, allParams);
 
             return {
                 icon: param
             };
-        }
-
-        else {
+        } else {
             invalidParam(param, index);
         }
-    }
-
-    else if (isDOMNode && index === 0) {
+    } else if (isDOMNode && index === 0) {
         // Example: swal(<DOMNode />);
         expectOptionsOrNothingAfter(index, allParams);
 
         return {
             content: param
         };
-    }
-
-    else if (isPlainObject(param)) {
+    } else if (isPlainObject(param)) {
         expectNothingAfter(index, allParams);
 
         return param;
-    }
-
-    else {
+    } else {
         invalidParam(param, index);
     }
 
 };
 
-export const getOpts = (...params) => {
-    let opts = {};
+export const getOpts = (...params: SAFilterParams): SAFilterOptions => {
+    let opts = <any>{};
 
     params.forEach((param, index) => {
         let changes = paramToOption(opts, param, index, params);
@@ -117,7 +116,7 @@ export const getOpts = (...params) => {
 
     opts.content = getContentOpts(opts.content);*/
 
-    const finalOptions = Object.assign({}, defaultOpts, userDefaults, opts);
+    const finalOptions: SAFilterOptions = Object.assign({}, defaultOpts, userDefaults, opts);
 
     // Check if the users uses any deprecated options:
     /*Object.keys(finalOptions)
