@@ -1,6 +1,8 @@
 //import {EventEmitter} from 'events';
 import Trigger, { TriggerInterface } from './Trigger';
 import { clone, arraysEqual } from './utils';
+import { BlockInterface } from '../block/Block';
+import { instanceOf } from 'prop-types';
 
 export interface DropdownProps {
     id: string
@@ -23,14 +25,20 @@ export interface DropdownInterface extends TriggerInterface {
     render(): JQuery;
 }
 
+interface IBlock {
+    [index: string]: any;
+}
+
+type valuesType = string[] | string | null;
+
 export default class Dropdown extends Trigger implements DropdownInterface {
 
     props: DropdownProps;
-    blocks: any[];
+    blocks: IBlock;
     component: JQuery;
     container: JQuery;
-    initValue: string | null | string[];
-    value: string | null | string[];
+    initValue: valuesType;
+    value: valuesType;
     valueLabel: string;
     valueTitle: string;
 
@@ -57,38 +65,38 @@ export default class Dropdown extends Trigger implements DropdownInterface {
         });
     }
 
-    addComponent(block: any): void {
-        let instance = this;
-        let block_id: any = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
+    addComponent(block: BlockInterface<valuesType>): void {
+        let block_id = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
 
         this._setInitValue(block);
 
         this.blocks.push(block_id);
         this.blocks[block_id] = block;
         //this._setComponentValue(block_id);
-        block.on('change', function() {
-            instance._setComponentValue(block_id);
+        block.on('change', () => {
+            this._setComponentValue(block_id);
         });
         this.container.append(block.render());
     }
 
-    _setInitValue(block: any) {
-        let value = clone(block.getValue());
+    _setInitValue(block: BlockInterface<valuesType>) {
+        let value: valuesType = clone(block.getValue());
         if (value) {
             if ((value instanceof Array && value !== [])
-                || (typeof (value) === 'string' && value !== '')) {
+                || (value instanceof String && value !== '')) {
                 this.initValue = value;
                 if (block.validValue(value)) {
                     this.value = value;
                     this.valueLabel = block.getValueLabel();
                     this.valueTitle = block.getValueTitle();
+
                     this.emit('change');
                 }
             }
         }
     }
 
-    _setComponentValue(block_id: any) {
+    _setComponentValue(block_id: string) {
         let block = this.blocks[block_id],
             value = block.getValue() || '';
         if (value !== '') {
@@ -123,11 +131,11 @@ export default class Dropdown extends Trigger implements DropdownInterface {
         }
     }
 
-    getInitValue(): string | null | string[] {
+    getInitValue(): valuesType {
         return this.initValue;
     }
 
-    getValue(): string | null | string[] {
+    getValue(): valuesType {
         return this.value;
     }
 
@@ -159,7 +167,7 @@ export default class Dropdown extends Trigger implements DropdownInterface {
     _templateContainer(): string {
         let html = '';
         html += '<div id="' + this.props.id + '" class="sa-filter-form  dropdown-menu">';
-        html += '<form onsubmit="return false"></form>';
+        html += '<form onsubmit="return false" />';
         html += this._templateSubmit();
         html += '</div>';
         return html;

@@ -8,7 +8,7 @@ export interface SAFilterOptions {
     clear_text: string
     submit: string
     submit_text: string
-    initDatepicker: (datePickerElement: JQuery, onChangeCallback: () => void) => void
+    initDatepicker: (datePickerElement: JQuery, onChangeCallback: (input: HTMLElement) => void) => void
 }
 
 export type SAFilterParams = (string|Partial<SAFilterOptions>)[];

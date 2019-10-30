@@ -30,8 +30,8 @@ export default class Button implements ButtonInterface{
     }
 
     setValue(labelValue: string, title: string): void {
-        this.props.title = title;
         this.props.labelValue = labelValue;
+        this.props.title = title;
         this.refresh();
     }
 
