@@ -76,21 +76,10 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         this.emit('change');
     }
 
-    validValue(value: string | null): boolean {
-        /*console.log('MultiSelectBlock.validValue', value);
-        console.log('found', this.container.find('.check-list-item').find('input[value="' + value + '"]').length);
-        if (value instanceof Array) {
-
-        } else {
-
-        }*/
-        //this.container.find('.check-list-item').find('input[value="' + value + '"]').length > 0
-        /*return value instanceof Array || this.container.find('.check-list-item')
-                .find('input[value="' + value + '"]').length > 0
-            || value === '' || value === [];*/
-        return this.container.find('.check-list-item')
-                .find('input[value="' + value + '"]').length > 0
-            || value === '';
+    validValue(value: string[] | string | null): boolean {
+        return value instanceof Array || this.container.find('.check-list-item')
+                    .find('input[value="' + value + '"]').length > 0
+                || value === '';
     }
 
     setValue(value: string | null, selected?: boolean): void {
@@ -156,7 +145,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
     }
 
     refresh(customItems?: ListItemInterface[]): void {
-        console.log('MultiSelectBlock.refresh');
+        //console.log('MultiSelectBlock.refresh');
         const block_items = $(this._templateList());
         const block_selected = $(this._templateList(true));
         let block_clearButton;

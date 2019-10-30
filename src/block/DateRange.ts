@@ -51,8 +51,8 @@ export default class DateRange extends Block<string> implements DateInterface {
         this.datepicker = instance.component.find('.date-picker');
 
         if (opts.initDatepicker) {
-            opts.initDatepicker(this.datepicker, () => {
-                this.handleChange();
+            opts.initDatepicker(this.datepicker, (that) => {
+                this.handleChange(that);
             });
         }
         /*this.datepicker.datepicker({
@@ -71,14 +71,15 @@ export default class DateRange extends Block<string> implements DateInterface {
                 this.handleClear();
             });
 
-        this.component.on('change', '.date-picker', () => {
-            this.handleChange();
+        this.component.on('change', '.date-picker', function() {
+            instance.handleChange(this);
         });
     }
 
-    handleChange() {
-        let that = $(this.datepicker);
-        let fieldCurrType = that.attr('id') === 'date-' + this.props.name + '-min' ? 'min' : 'max';
+    handleChange(that: HTMLElement) {
+        console.log('handleChange');
+        let input = $(that);
+        let fieldCurrType = input.attr('id') === 'date-' + this.props.name + '-min' ? 'min' : 'max';
 
         let oldFullValue = this.props.value || '';
         let oldMinValue = '';
@@ -94,9 +95,9 @@ export default class DateRange extends Block<string> implements DateInterface {
         }
 
         if (fieldCurrType === 'min') {
-            newMinValue = String(that.val());
+            newMinValue = String(input.val());
         } else {
-            newMaxValue = String(that.val());
+            newMaxValue = String(input.val());
         }
         if (newMinValue) {
             newMinText = newMinValue.substr(6, 2) + newMinValue.substr(3, 2) + newMinValue.substr(0, 2);
@@ -107,7 +108,7 @@ export default class DateRange extends Block<string> implements DateInterface {
 
         if (newMinValue && newMaxValue && newMinText > newMaxText && this.props.error_date) {
             setTimeout(function() {
-                that.val(fieldCurrType === 'min' ? oldMinValue : oldMaxValue);
+                input.val(fieldCurrType === 'min' ? oldMinValue : oldMaxValue);
             }, 0);
             alert(this.props.error_date);
         } else {
@@ -127,6 +128,7 @@ export default class DateRange extends Block<string> implements DateInterface {
     }
 
     setValue(value: string | null): void {
+        console.log('setValue');
         this.props.value = value || '';
         if (value === null) {
             this.component.find('.date-picker')
