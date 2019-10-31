@@ -45,10 +45,10 @@ export default class DateRange extends Block<string> implements DateInterface {
                 .val(max);
             this.input.val(this.props.value || '');
 
-            instance.component.prepend(this._templateClear());
+            this.component.prepend(this._templateClear());
         }
 
-        this.datepicker = instance.component.find('.date-picker');
+        this.datepicker = this.component.find('.date-picker');
 
         if (opts.initDatepicker) {
             opts.initDatepicker(this.datepicker, (that) => {

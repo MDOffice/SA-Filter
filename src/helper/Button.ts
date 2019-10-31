@@ -19,7 +19,7 @@ export default class Button implements ButtonInterface{
     container: JQuery;
 
     constructor(props: ButtonProps) {
-        this.props = props;//id, title, label, labelAlways, labelAll
+        this.props = props;
 
         this.container = this.templateContainer();
         this.refresh();
@@ -53,7 +53,7 @@ export default class Button implements ButtonInterface{
             html += '<span class="fieldLabel">' + this.props.label + ':</span> ';
         }
         html += has_value ? this.props.labelValue : this.props.labelAll;
-        html += ' <span class="caret"></span>';
+        html += ' <span class="caret" />';
         html += '</div>';
 
         return html;

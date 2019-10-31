@@ -25,11 +25,11 @@ export interface DropdownInterface extends TriggerInterface {
     render(): JQuery;
 }
 
+type valuesType = string[] | string | null;
+
 interface IBlock {
     [index: string]: any;
 }
-
-type valuesType = string[] | string | null;
 
 export default class Dropdown extends Trigger implements DropdownInterface {
 
