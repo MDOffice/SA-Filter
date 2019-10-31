@@ -83,7 +83,7 @@ export default class Dropdown extends Trigger implements DropdownInterface {
         let value: valuesType = clone(block.getValue());
         if (value) {
             if ((value instanceof Array && value !== [])
-                || (value instanceof String && value !== '')) {
+                || (typeof value === 'string' && value !== '')) {
                 this.initValue = value;
                 if (block.validValue(value)) {
                     this.value = value;
