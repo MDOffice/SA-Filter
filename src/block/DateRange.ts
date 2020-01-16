@@ -100,10 +100,10 @@ export default class DateRange extends Block<string> implements DateInterface {
             newMaxValue = String(input.val());
         }
         if (newMinValue) {
-            newMinText = newMinValue.substr(6, 2) + newMinValue.substr(3, 2) + newMinValue.substr(0, 2);
+            newMinText = newMinValue.substr(6, 4) + newMinValue.substr(3, 2) + newMinValue.substr(0, 2);
         }
         if (newMaxValue) {
-            newMaxText = newMaxValue.substr(6, 2) + newMaxValue.substr(3, 2) + newMaxValue.substr(0, 2);
+            newMaxText = newMaxValue.substr(6, 4) + newMaxValue.substr(3, 2) + newMaxValue.substr(0, 2);
         }
 
         if (newMinValue && newMaxValue && newMinText > newMaxText && this.props.error_date) {
