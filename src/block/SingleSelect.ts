@@ -113,6 +113,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
             this.props.originOptions.parent()
                 .val(this.props.value);
         }
+        this.props.originSelect.trigger('change');
     }
 
     setEmptyValue(): void {
