@@ -1,6 +1,6 @@
 {
     "name": "@kelatev/sa-filter",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "author": "Kelatev",
     "license": "MIT",
     "main": "/dist/main.umd.js",
@@ -20,10 +20,12 @@
     },
     "devDependencies": {
         "@babel/core": "^7.9.6",
+        "@babel/parser": "^7.9.6",
         "@babel/plugin-transform-modules-umd": "^7.9.0",
         "@babel/preset-env": "^7.9.6",
         "@babel/preset-react": "^7.9.4",
         "@babel/preset-typescript": "^7.9.0",
+        "@babel/types": "^7.9.6",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",
         "css-loader": "^3.5.3",
