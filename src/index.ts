@@ -1,7 +1,6 @@
 import './index.css';
 
 import 'jquery';
-//import 'bootstrap';
 
 import { SAFilterOptions, getOpts } from './options/index';
 export { setDefaults, getOpts } from './options/index';

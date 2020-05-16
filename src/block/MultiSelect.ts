@@ -4,7 +4,6 @@ export interface MultiSelectInterface extends ListInterface<string[]> {
 }
 
 export interface MultiSelectProps extends ListProps<string[]> {
-    originSelect: JQuery
     exclude?: string
     hidden?: string
 }
@@ -126,6 +125,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
                 .prop('selected', selected);
         }
         this.props.originSelect.trigger('change');
+        this.props.originSelect.get(0).dispatchEvent(new Event('change'));
     }
 
     setEmptyValue(): void {

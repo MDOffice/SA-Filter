@@ -12,25 +12,24 @@ interface NumRangeProps extends ComponentProps {
 
 export default class NumRangeComponent extends Component {
 
-    elements: JQuery;
     props: NumRangeProps;
     blockNumRange: NumRangeInterface;
 
     constructor(component: Element, opts: SAFilterOptions) {
         super(component, opts);
 
-        this.setOptions();
+        this.readOptions();
         this.createBlocks();
-        this._additionRender();
+        this.additionRender();
     }
 
-    setOptions() {
+    readOptions() {
         this.props = Object.assign(this.props, {
+            name: this.component.attr('data-name'),
+            value: this.component.attr('data-value'),
             min: this.component.attr('data-min'),
             max: this.component.attr('data-max'),
             type: this.component.attr('data-type') || '',
-            name: this.component.attr('data-name'),
-            value: this.component.attr('data-value'),
             title_min: this.component.attr('data-title-min'),
             title_max: this.component.attr('data-title-max')
         });
@@ -49,7 +48,7 @@ export default class NumRangeComponent extends Component {
         this.addComponent(this.blockNumRange);
     }
 
-    _additionRender() {
+    private additionRender() {
         this.component.append(this.blockNumRange.renderInput());
     }
 }

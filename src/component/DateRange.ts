@@ -15,7 +15,8 @@ interface DateRangeProps extends ComponentProps {
 
 export default class DateRangeComponent extends Component {
 
-    elements: JQuery;
+    originSelect: JQuery;
+    originOptions: JQuery;
     props: DateRangeProps;
     blockDateRange: DateInterface;
     blockSingleSelect: SingleSelectInterface;
@@ -25,13 +26,15 @@ export default class DateRangeComponent extends Component {
         this.readOptions();
 
         this.createBlocks();
-        this._assignEvent();
-        this._additionRender();
+        this.additionAssignEvent();
+        this.additionRender();
     }
 
     readOptions() {
-        this.elements = this.component.find('select')
-            .find('option');
+        const selectElement = this.component.find('select');
+
+        this.originSelect = selectElement;
+        this.originOptions = selectElement.find('option');
         this.props = Object.assign(this.props, {
             name: this.component.attr('data-name'),
             value: this.component.attr('data-value'),
@@ -54,19 +57,20 @@ export default class DateRangeComponent extends Component {
         }, this.opts);
         this.addComponent(this.blockDateRange);
 
-        if (this.elements.length > 0) {
+        if (this.originOptions.length > 0) {
             this.blockSingleSelect = new SingleSelectBlock({
                 name: this.props.name,
                 value: this.props.value,
                 has_search: false,
                 clearTitle: this.props.clear_text,
-                originOptions: this.elements
+                originSelect: this.originSelect,
+                originOptions: this.originOptions
             });
             this.addComponent(this.blockSingleSelect);
         }
     }
 
-    _assignEvent() {
+    private additionAssignEvent() {
         if (this.blockSingleSelect) {
             this.component.on('shown.bs.dropdown', () => {
                 this.blockSingleSelect.refresh();
@@ -74,7 +78,7 @@ export default class DateRangeComponent extends Component {
         }
     }
 
-    _additionRender() {
+    private additionRender() {
         this.component.append(this.blockDateRange.renderInput());
     }
 

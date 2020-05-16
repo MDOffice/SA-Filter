@@ -20,6 +20,8 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
         this.props = {
             name: props.name,
             value: props.value || '',
+            originSelect: props.originSelect,
+            originOptions: props.originOptions,
             has_search: props.has_search,
             searchTitle: props.searchTitle,
             search_id: props.search_id || 'search',
@@ -30,8 +32,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
             exclude: props.exclude,
             hidden: props.hidden,
             hide: props.hide,
-            clearTitle: props.clearTitle,
-            originOptions: props.originOptions
+            clearTitle: props.clearTitle
         };
         this.state = {
             hide: props.hide
@@ -113,7 +114,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
             this.props.originOptions.parent()
                 .val(this.props.value);
         }
-        this.props.originSelect.trigger('change');
+        this.props.originSelect.get(0).dispatchEvent(new Event('change'));
     }
 
     setEmptyValue(): void {

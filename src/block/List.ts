@@ -16,9 +16,9 @@ export interface ListInterface<T> extends BlockInterface<T> {
 }
 
 export interface ListProps<T> {
-    name?: string;
-    value: T;
-    has_search?: boolean;
+    name?: string
+    value: T
+    has_search?: boolean
     search_id?: string
     hide?: string | number
     searchUrl?: string
@@ -26,8 +26,9 @@ export interface ListProps<T> {
     nomatchText?: string
     search_container?: string
     searchTitle?: string
-    clearTitle?: string | null;
-    originOptions?: JQuery
+    clearTitle?: string | null
+    originSelect: JQuery
+    originOptions: JQuery
 }
 
 export interface ListState {

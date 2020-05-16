@@ -14,7 +14,7 @@ export interface ComponentProps {
 
 export default class Component {
 
-    container_id: string;
+    containerId: string;
     component: any;
     props: ComponentProps;
     opts: SAFilterOptions;
@@ -26,7 +26,7 @@ export default class Component {
 
     constructor(component: Element, opts: SAFilterOptions) {
         this.opts = opts;
-        this.container_id =
+        this.containerId =
             '_' + Math.round((Math.random() % 10) * Math.pow(10, 10));
         this.component = $(component);
 
@@ -48,7 +48,7 @@ export default class Component {
 
     createButton() {
         this.button = new Button({
-            id: this.container_id + '-dropdown',
+            id: this.containerId + '-dropdown',
             className: this.props.btn_class,
             label: this.props.title,
             labelAlways: this.props.title_always,
@@ -58,7 +58,7 @@ export default class Component {
 
     createDropdownController() {
         this.dropdown = new Dropdown({
-            id: this.container_id + '-dropdown',
+            id: this.containerId + '-dropdown',
             submitText: this.props.submit_text
         });
         this.dropdown.on({
