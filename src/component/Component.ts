@@ -22,7 +22,7 @@ export default class Component {
     button: ButtonInterface;
     dropdown: DropdownInterface;
 
-    private _onSubmitProcess: boolean;
+    private onSubmitProcess: boolean;
 
     constructor(component: Element, opts: SAFilterOptions) {
         this.opts = opts;
@@ -66,7 +66,7 @@ export default class Component {
                 this.button.setValue(this.dropdown.getValueLabel(), this.dropdown.getValueTitle());
             },
             submit: () => {
-                this._onSubmitProcess = true;
+                this.onSubmitProcess = true;
                 const submitFunc = new Function('', this.props.submit);
                 submitFunc();
                 //this.component.trigger('hide.bs.dropdown');
@@ -82,14 +82,14 @@ export default class Component {
     assignEvents() {
         this.component.on('hidden.bs.dropdown', () => {
             console.log('hidden.bs.dropdown');
-            if (this.props.submit && !this._onSubmitProcess) {
+            if (this.props.submit && !this.onSubmitProcess) {
                 if (this.dropdown.getInitValue() !== this.dropdown.getValue()) {
                     this.dropdown.resetToInitValue();
                 }
             }
 
-            if (this._onSubmitProcess) {
-                this._onSubmitProcess = false;
+            if (this.onSubmitProcess) {
+                this.onSubmitProcess = false;
             }
         });
     }

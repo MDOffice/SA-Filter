@@ -86,7 +86,6 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         if (this.resetOption) {
             this.resetOption.remove();
             this.resetOption = null;
-            console.log(this.resetOption);
         }
 
         if (value && idx_value < 0 && selected) {
@@ -148,9 +147,9 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         if (customItems) {
             $.each(customItems, (index, element) => {
                 if (element.active) {
-                    block_selected.append(this._templateListItem(element));
+                    block_selected.append(this.templateListItem(element));
                 } else {
-                    block_items.append(this._templateListItem(element));
+                    block_items.append(this.templateListItem(element));
                 }
             });
         } else {
@@ -158,9 +157,9 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             $.each(this.elements, (index, element) => {
                 if (element.active) {
                     buttonClearNeed = true;
-                    block_selected.append(this._templateListItem(element));
+                    block_selected.append(this.templateListItem(element));
                 } else {
-                    block_items.append(this._templateListItem(element));
+                    block_items.append(this.templateListItem(element));
                 }
             });
 
@@ -187,7 +186,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         }
     }
 
-    _templateListItem(props: ListItemInterface): string {
+    private templateListItem(props: ListItemInterface): string {
         return '<li class="check-list-item"><label class="item-label" title="' + (props.title || '') + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + '>' + props.label + '</label></li>';
     }
 

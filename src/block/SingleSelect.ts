@@ -83,6 +83,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
         let instance = this;
         if (this.resetOption) {
             this.resetOption.remove();
+            this.resetOption = null;
         }
         this.props.value = value || '';
         this.container
@@ -119,13 +120,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
         if (!this.resetOption) {
             this.resetOption = this.props.originOptions
                 .parent()
-                .after(
-                    $(
-                        '<input type="hidden" name="' +
-                        this.props.name +
-                        '" value="null">'
-                    )
-                );
+                .after($(`<input type="hidden" name="${this.props.name}" value="null">`));
         }
     }
 
@@ -135,7 +130,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
 
         if (customItems) {
             $.each(customItems, function(index, element) {
-                $list.append(instance._templateListItem(element));
+                $list.append(instance.templateListItem(element));
             });
         } else {
             let need_clear = false;
@@ -143,7 +138,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
                 if (element.active) {
                     need_clear = true;
                 }
-                $list.append(instance._templateListItem(element));
+                $list.append(instance.templateListItem(element));
             });
 
             if (need_clear && instance.props.clearTitle != '') {
@@ -159,20 +154,14 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
         this.container.find('.more-criteria-footer')
             .remove();
         if (this.state.hide && this.state.hide !== '0') {
-            this.container.append(
-                `<div class="more-criteria-footer">...${this.props.exclude} <span class="hidden-no">${this.state.hide}</span> ${this.props.hidden}</div>`
-            );
+            this.container.append(`<div class="more-criteria-footer">...${this.props.exclude} <span class="hidden-no">${this.state.hide}</span> ${this.props.hidden}</div>`);
         }
 
     }
 
-    _templateListItem(props: ListItemInterface): string {
-        return (
-            `<li class="select-list-item${(props.active ? ' active' : '')}" title="${(props.title || '')}" data-value="${props.value}"><label class="item-label">${props.label}</label></li>`
-        );
+    private templateListItem(props: ListItemInterface): string {
+        return (`<li class="select-list-item${(props.active ? ' active' : '')}" title="${(props.title || '')}" data-value="${props.value}"><label class="item-label">${props.label}</label></li>`);
     }
 
 
-
-
-    }
+}

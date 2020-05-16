@@ -51,12 +51,12 @@ export default class Dropdown extends Trigger implements DropdownInterface {
         };
 
         this.blocks = [];
-        this._init();
+        this.init();
     }
 
-    _init() {
+    private init() {
         let instance = this;
-        instance.component = $(instance._templateContainer());
+        instance.component = $(instance.templateContainer());
         instance.container = instance.component.find('form');
 
         instance.initValue = '';
@@ -66,20 +66,20 @@ export default class Dropdown extends Trigger implements DropdownInterface {
     }
 
     addComponent(block: BlockInterface<valuesType>): void {
-        let block_id = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
+        const id = '_' + Math.round(Math.random() % 10 * Math.pow(10, 10));
 
-        this._setInitValue(block);
+        this.setInitValue(block);
 
-        this.blocks.push(block_id);
-        this.blocks[block_id] = block;
-        //this._setComponentValue(block_id);
+        this.blocks.push(id);
+        this.blocks[id] = block;
+        //this._setComponentValue(id);
         block.on('change', () => {
-            this._setComponentValue(block_id);
+            this.setComponentValue(id);
         });
         this.container.append(block.render());
     }
 
-    _setInitValue(block: BlockInterface<valuesType>) {
+    private setInitValue(block: BlockInterface<valuesType>) {
         let value: valuesType = clone(block.getValue());
         if (value) {
             if ((value instanceof Array && value !== [])
@@ -96,13 +96,14 @@ export default class Dropdown extends Trigger implements DropdownInterface {
         }
     }
 
-    _setComponentValue(block_id: string) {
-        let block = this.blocks[block_id],
-            value = block.getValue() || '';
+    private setComponentValue(blockId: string) {
+        const block = this.blocks[blockId];
+        const value = block.getValue() || '';
+        console.log('Dropdown.setComponentValue', value);
         if (value !== '') {
             for (let i = 0, len = this.blocks.length; i < len; i++) {
                 let key = this.blocks[i];
-                if (key !== block_id) {
+                if (key !== blockId) {
                     this.blocks[key].setValue(null);
                 }
             }
@@ -110,13 +111,12 @@ export default class Dropdown extends Trigger implements DropdownInterface {
             //set init and get Label if not null
             block.setEmptyValue();
         }
-        console.log('_setComponentValue', value);
 
         this.value = value;
         this.valueLabel = block.getValueLabel();
         this.valueTitle = block.getValueTitle();
 
-        this._showSubmit(!arraysEqual(this.getInitValue(), value));//some error with many blocks
+        this.showSubmit(!arraysEqual(this.getInitValue(), value));//some error with many blocks
         this.emit('change');
     }
 
@@ -126,7 +126,7 @@ export default class Dropdown extends Trigger implements DropdownInterface {
                 block = this.blocks[block_id];
             if (block.validValue(this.initValue)) {
                 block.setValue(this.initValue);
-                this._setComponentValue(block_id);
+                this.setComponentValue(block_id);
             }
         }
     }
@@ -151,7 +151,7 @@ export default class Dropdown extends Trigger implements DropdownInterface {
         return this.component;
     }
 
-    _showSubmit(visible: boolean) {
+    private showSubmit(visible: boolean) {
         /*var show = false;
         for (var i in this.submits) {
             if (this.submits[i].hasOwnProperty(i))
@@ -164,16 +164,16 @@ export default class Dropdown extends Trigger implements DropdownInterface {
             .toggle(visible);
     }
 
-    _templateContainer(): string {
+    private templateContainer(): string {
         let html = '';
         html += '<div id="' + this.props.id + '" class="sa-filter-form  dropdown-menu">';
         html += '<form onsubmit="return false" />';
-        html += this._templateSubmit();
+        html += this.templateSubmit();
         html += '</div>';
         return html;
     }
 
-    _templateSubmit(): string {
+    private templateSubmit(): string {
         let html = '';
         if (this.props.submitText) {
             html = '<div class="submit-footer" style="display: none">' + this.props.submitText + '</div>';

@@ -41,7 +41,7 @@ export default class NumRange extends Block<string> implements NumRangeInterface
 
     _init() {
         let instance = this;
-        instance.component = $(instance._template());
+        instance.component = $(instance.template());
 
         let range = this.value;
         this.input = this.component.find('input[name="' + this.name + '"]');
@@ -148,7 +148,7 @@ export default class NumRange extends Block<string> implements NumRangeInterface
         return this.input;
     }
 
-    _template(): string {
+    private template(): string {
         let html = '';
         html += '<div class="form-body"><div class="field-group aui-field-workratio">';
         html += '<input name="' + this.name + '" type="hidden" disabled>';
