@@ -4,7 +4,7 @@ export interface MultiSelectInterface extends ListInterface<string[]> {
 }
 
 export interface MultiSelectProps extends ListProps<string[]> {
-    select: JQuery
+    originSelect: JQuery
     exclude?: string
     hidden?: string
 }
@@ -18,9 +18,10 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         super();
 
         this.props = {
-            select: props.select,
             name: props.name,
             value: props.value || [],
+            originSelect: props.originSelect,
+            originOptions: props.originOptions,
             has_search: props.has_search,
             searchTitle: props.searchTitle,
             search_id: props.search_id || 'search',
@@ -31,8 +32,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             exclude: props.exclude,
             hidden: props.hidden,
             hide: props.hide,
-            clearTitle: props.clearTitle,
-            initOptions: props.initOptions
+            clearTitle: props.clearTitle
         };
         this.state = {
             hide: props.hide
@@ -44,10 +44,10 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         let $a = $(self);
         let value = String($a.find('input')
             .val());
-        let no_found = true;
         let selected = !$a.find('input')
             .is(':checked');
 
+        let no_found = true;
         $.each(this.elements, function(index, element) {
             if (element.value === value) {
                 no_found = false;
@@ -63,8 +63,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
                 label: label,
                 active: true
             });
-            console.log(this.props.select);
-            this.props.select.append(`<option value="${value}" title="${title}" selected>${label}</option>`);
+            this.props.originSelect.append(`<option value="${value}" title="${title}" selected>${label}</option>`);
         }
 
         let old_value = this.getValue();
@@ -78,14 +77,16 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
 
     validValue(value: string[] | string | null): boolean {
         return value instanceof Array || this.container.find('.check-list-item')
-                    .find('input[value="' + value + '"]').length > 0
-                || value === '';
+                .find('input[value="' + value + '"]').length > 0
+            || value === '';
     }
 
     setValue(value: string | null, selected?: boolean): void {
-        let idx_value = this.props.value.indexOf(value);
+        const idx_value = this.props.value.indexOf(value);
         if (this.resetOption) {
             this.resetOption.remove();
+            this.resetOption = null;
+            console.log(this.resetOption);
         }
 
         if (value && idx_value < 0 && selected) {
@@ -96,15 +97,12 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             this.props.value = [];
         }
 
-        $.each(this.elements, function(index, element) {
+        $.each(this.elements, (index, element) => {
             if (value === null) {
                 element.active = false;
-            } else {
-                if (element.value === value) {
-                    element.active = selected;
-                }
+            } else if (element.value === value) {
+                element.active = selected;
             }
-
         });
 
         let toUpdate: JQuery;
@@ -125,22 +123,19 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
 
         console.log('MultiSelectBlock.setValue', value, selected);
         if (this.validValue(value)) {
-            //console.log('MultiSelectBlock.setValue', 'VALID value');
-            //this.options.attr('selected', false);
-            this.props.initOptions.filter('[value="' + value + '"]')
+            this.props.originOptions.filter('[value="' + value + '"]')
                 .prop('selected', selected);
-            //this.select.val(this.value);
         }
     }
 
     setEmptyValue(): void {
         console.log('MultiSelectBlock.setEmptyValue');
         this.setValue(null);
-        this.props.initOptions.filter('[selected]')
+        this.props.originOptions.filter('[selected]')
             .prop('selected', false);
         if (!this.resetOption) {
             this.resetOption = $('<input type="hidden" name="' + this.props.name + '" value="null">');
-            this.props.select.after(this.resetOption);
+            this.props.originSelect.after(this.resetOption);
         }
     }
 

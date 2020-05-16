@@ -60,7 +60,7 @@ export default class DateRangeComponent extends Component {
                 value: this.props.value,
                 has_search: false,
                 clearTitle: this.props.clear_text,
-                initOptions: this.elements
+                originOptions: this.elements
             });
             this.addComponent(this.blockSingleSelect);
         }

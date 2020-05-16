@@ -155,6 +155,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     clear: both;
+    outline: none;
 }
 
 .sa-filter-list ul {

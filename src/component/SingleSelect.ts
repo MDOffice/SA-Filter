@@ -52,7 +52,7 @@ export default class SingleSelectComponent extends Component {
             value: this.props.value,
             has_search: !!this.props.search_str,
             clearTitle: this.props.clear_text,
-            initOptions: this.elements,
+            originOptions: this.elements,
             searchTitle: this.props.search_str
                 ? this.props.search_str + '...'
                 : null,

@@ -19,8 +19,8 @@ interface MultiSelectProps extends ComponentProps {
 
 export default class MultiSelectComponent extends Component {
 
-    select: JQuery;
-    elements: JQuery;
+    originSelect: JQuery;
+    originOptions: JQuery;
     props: MultiSelectProps;
     blockMultiSelect: MultiSelectInterface;
 
@@ -33,16 +33,14 @@ export default class MultiSelectComponent extends Component {
     }
 
     setOptions() {
-        this.select = this.component.find('select');
-        this.elements = this.component.find('select')
-            .find('option');
+        const selectElement = this.component.find('select');
+
+        this.originSelect = selectElement;
+        this.originOptions = selectElement.find('option');
         this.props = Object.assign(this.props, {
-            name: this.component.find('select')
-                .attr('name'),
-            value: this.component.find('select')
-                .val(),
-            hide: this.component.find('select')
-                .attr('data-hide') || '0',
+            name: selectElement.attr('name'),
+            value: selectElement.val(),
+            hide: selectElement.attr('data-hide') || '0',
             search_str: this.component.attr('data-search'),
             nomatch: this.component.attr('data-nomatch'),
             url: this.component.attr('data-url'),
@@ -56,8 +54,8 @@ export default class MultiSelectComponent extends Component {
         this.blockMultiSelect = new MultiSelectBlock({
             name: this.props.name,
             value: this.props.value,
-            select: this.select,
-            initOptions: this.elements,
+            originSelect: this.originSelect,
+            originOptions: this.originOptions,
             has_search: true,
             clearTitle: this.props.clear_text,
             searchTitle: this.props.search_str + '...',

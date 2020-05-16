@@ -31,7 +31,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
             hidden: props.hidden,
             hide: props.hide,
             clearTitle: props.clearTitle,
-            initOptions: props.initOptions
+            originOptions: props.originOptions
         };
         this.state = {
             hide: props.hide
@@ -60,7 +60,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
                 label: newElementLabel,
                 active: true
             });
-            this.props.initOptions
+            this.props.originOptions
                 .parent()
                 .append(`<option value="${value}" title="${newElementTitle}">${newElementLabel}</option>`);
         }
@@ -109,7 +109,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
         if (this.validValue(this.props.value)) {
             //this.options.attr('selected', false);
             //this.options.filter('[value="' + this.props.value + '"]').attr('selected', true);
-            this.props.initOptions.parent()
+            this.props.originOptions.parent()
                 .val(this.props.value);
         }
     }
@@ -117,7 +117,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
     setEmptyValue(): void {
         this.setValue(null);
         if (!this.resetOption) {
-            this.resetOption = this.props.initOptions
+            this.resetOption = this.props.originOptions
                 .parent()
                 .after(
                     $(

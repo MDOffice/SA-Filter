@@ -27,7 +27,7 @@ export interface ListProps<T> {
     search_container?: string
     searchTitle?: string
     clearTitle?: string | null;
-    initOptions?: JQuery
+    originOptions?: JQuery
 }
 
 export interface ListState {
@@ -47,7 +47,7 @@ class List<T> extends Block<T> implements ListInterface<T> {
         this.container = instance.component.find('.sa-filter-list-scroll');
         this.elements = [];
 
-        $.each(this.props.initOptions, function() {
+        $.each(this.props.originOptions, function() {
             let that = $(this);
             instance.elements.push({
                 value: that.attr('value'),
