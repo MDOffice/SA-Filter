@@ -122,7 +122,6 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             this.props.originOptions.filter('[value="' + value + '"]')
                 .prop('selected', selected);
         }
-        this.props.originSelect.get(0).dispatchEvent(new Event('change'));
     }
 
     setEmptyValue(): void {

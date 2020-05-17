@@ -4,7 +4,7 @@ import { BlockInterface, valuesType } from '../block/Block';
 export interface DropdownProps {
     id: string
     submitText: string
-    onChange: (valueLabel: string, valueTitle: string) => void
+    onChange: (value: valuesType, valueLabel: string, valueTitle: string) => void
     onSubmit: () => void
 }
 
@@ -67,7 +67,7 @@ export default class Dropdown implements DropdownInterface {
                 if (block.validValue(value)) {
                     this.value = value;
 
-                    this.props.onChange(block.getValueLabel(), block.getValueTitle());
+                    this.props.onChange(value, block.getValueLabel(), block.getValueTitle());
                 }
             }
         }
@@ -92,7 +92,7 @@ export default class Dropdown implements DropdownInterface {
         this.value = value;
 
         this.showSubmit(!arraysEqual(this.initValue, value));//    TODO: some error with many blocks
-        this.props.onChange(block.getValueLabel(), block.getValueTitle());
+        this.props.onChange(value, block.getValueLabel(), block.getValueTitle());
     }
 
     resetToInitValue(): void {

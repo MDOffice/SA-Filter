@@ -59,8 +59,9 @@ export default class Component {
         this.dropdown = new Dropdown({
             id: this.containerId + '-dropdown',
             submitText: this.props.submit_text,
-            onChange: (valueLabel, valueTitle) => {
+            onChange: (value, valueLabel, valueTitle) => {
                 this.button.setValue(valueLabel, valueTitle);
+                this.component.get(0).dispatchEvent(new CustomEvent('filter-change', {detail: value}));
             },
             onSubmit: () => {
                 this.onSubmitProcess = true;
