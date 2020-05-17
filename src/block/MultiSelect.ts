@@ -127,9 +127,9 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
 
     setEmptyValue(): void {
         console.log('MultiSelectBlock.setEmptyValue');
-        //this.props.originSelect.val('');
-        this.props.originOptions.filter('[selected]')
-            .prop('selected', false);
+        this.props.originSelect.val('');
+        /*this.props.originOptions.filter('[selected]')
+            .prop('selected', false);*/
         this.setValue(null);
         if (!this.resetOption) {
             this.resetOption = $('<input type="hidden" name="' + this.props.name + '" value="null">');
