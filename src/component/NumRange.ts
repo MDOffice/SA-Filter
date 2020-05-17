@@ -15,7 +15,7 @@ export default class NumRangeComponent extends Component {
     props: NumRangeProps;
     blockNumRange: NumRangeInterface;
 
-    constructor(component: Element, opts: SAFilterOptions) {
+    constructor(component: HTMLElement, opts: SAFilterOptions) {
         super(component, opts);
 
         this.readOptions();
@@ -45,7 +45,7 @@ export default class NumRangeComponent extends Component {
             },
             error_date: 'Значення початку не може бути більше закінчення'
         });
-        this.addComponent(this.blockNumRange);
+        this.dropdown.addBlock(this.blockNumRange);
     }
 
     private additionRender() {

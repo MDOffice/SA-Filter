@@ -6,7 +6,7 @@ export default class MultiSelectComponent extends ListComponent<string[]> {
 
     blockMultiSelect: MultiSelectInterface;
 
-    constructor(component: Element, opts: SAFilterOptions) {
+    constructor(component: HTMLElement, opts: SAFilterOptions) {
         super(component, opts);
 
         this.createBlocks();
@@ -33,7 +33,7 @@ export default class MultiSelectComponent extends ListComponent<string[]> {
             exclude: this.props.exclude,
             hidden: this.props.hidden
         });
-        this.addComponent(this.blockMultiSelect);
+        this.dropdown.addBlock(this.blockMultiSelect);
     }
 
     private additionAssignEvent() {

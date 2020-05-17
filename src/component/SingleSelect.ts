@@ -6,7 +6,7 @@ export default class SingleSelectComponent extends ListComponent<string> {
 
     blockSingleSelect: SingleSelectInterface;
 
-    constructor(component: Element, opts: SAFilterOptions) {
+    constructor(component: HTMLElement, opts: SAFilterOptions) {
         super(component, opts);
 
         this.createBlocks();
@@ -33,7 +33,7 @@ export default class SingleSelectComponent extends ListComponent<string> {
             exclude: this.props.exclude,
             hidden: this.props.hidden
         });
-        this.addComponent(this.blockSingleSelect);
+        this.dropdown.addBlock(this.blockSingleSelect);
     }
 
     private additionAssignEvent() {

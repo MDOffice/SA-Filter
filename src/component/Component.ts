@@ -15,7 +15,7 @@ export interface ComponentProps {
 export default class Component {
 
     containerId: string;
-    component: any;
+    component: JQuery;
     props: ComponentProps;
     opts: SAFilterOptions;
 
@@ -24,10 +24,9 @@ export default class Component {
 
     private onSubmitProcess: boolean;
 
-    constructor(component: Element, opts: SAFilterOptions) {
+    constructor(component: HTMLElement, opts: SAFilterOptions) {
         this.opts = opts;
-        this.containerId =
-            '_' + Math.round((Math.random() % 10) * Math.pow(10, 10));
+        this.containerId = Component.makeId();
         this.component = $(component);
 
         this.props = {
@@ -59,13 +58,11 @@ export default class Component {
     createDropdownController() {
         this.dropdown = new Dropdown({
             id: this.containerId + '-dropdown',
-            submitText: this.props.submit_text
-        });
-        this.dropdown.on({
-            change: () => {
-                this.button.setValue(this.dropdown.getValueLabel(), this.dropdown.getValueTitle());
+            submitText: this.props.submit_text,
+            onChange: (valueLabel, valueTitle) => {
+                this.button.setValue(valueLabel, valueTitle);
             },
-            submit: () => {
+            onSubmit: () => {
                 this.onSubmitProcess = true;
                 const submitFunc = new Function('', this.props.submit);
                 submitFunc();
@@ -75,17 +72,11 @@ export default class Component {
         });
     }
 
-    addComponent(component: any) {
-        this.dropdown.addComponent(component);
-    }
-
     assignEvents() {
         this.component.on('hidden.bs.dropdown', () => {
             console.log('hidden.bs.dropdown');
             if (this.props.submit && !this.onSubmitProcess) {
-                if (this.dropdown.getInitValue() !== this.dropdown.getValue()) {
-                    this.dropdown.resetToInitValue();
-                }
+                this.dropdown.resetToInitValue();
             }
 
             if (this.onSubmitProcess) {
@@ -97,5 +88,9 @@ export default class Component {
     render() {
         this.component.append(this.button.render());
         this.component.append(this.dropdown.render());
+    }
+
+    static makeId() {
+        return '_' + Math.round((Math.random() % 10) * Math.pow(10, 10));
     }
 }

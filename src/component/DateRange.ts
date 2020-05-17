@@ -21,7 +21,7 @@ export default class DateRangeComponent extends Component {
     blockDateRange: DateInterface;
     blockSingleSelect: SingleSelectInterface;
 
-    constructor(component: Element, opts: SAFilterOptions) {
+    constructor(component: HTMLElement, opts: SAFilterOptions) {
         super(component, opts);
         this.readOptions();
 
@@ -55,7 +55,7 @@ export default class DateRangeComponent extends Component {
             error_date: 'Дата початку не може бути більше закінчення',
             initDatepicker: null
         }, this.opts);
-        this.addComponent(this.blockDateRange);
+        this.dropdown.addBlock(this.blockDateRange);
 
         if (this.originOptions.length > 0) {
             this.blockSingleSelect = new SingleSelectBlock({
@@ -66,7 +66,7 @@ export default class DateRangeComponent extends Component {
                 originSelect: this.originSelect,
                 originOptions: this.originOptions
             });
-            this.addComponent(this.blockSingleSelect);
+            this.dropdown.addBlock(this.blockSingleSelect);
         }
     }
 

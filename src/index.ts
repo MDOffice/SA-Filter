@@ -14,23 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const opts: SAFilterOptions = getOpts();
 
-    let elementsSelect = document.getElementsByClassName('sa-filter-select');
+    const elementsSelect = document.getElementsByClassName('sa-filter-select');
     for (let i = 0; i < elementsSelect.length; i++) {
-        new SingleSelectComponent(elementsSelect[i], opts);
+        new SingleSelectComponent(elementsSelect[i] as HTMLElement, opts);
     }
 
-    let elementsMultiSelect = document.getElementsByClassName('sa-filter-multiselect');
+    const elementsMultiSelect = document.getElementsByClassName('sa-filter-multiselect');
     for (let i = 0; i < elementsMultiSelect.length; i++) {
-        new MultiSelectComponent(elementsMultiSelect[i], opts);
+        new MultiSelectComponent(elementsMultiSelect[i] as HTMLElement, opts);
     }
 
-    let elementsNum = document.getElementsByClassName('sa-filter-num');
+    const elementsNum = document.getElementsByClassName('sa-filter-num');
     for (let i = 0; i < elementsNum.length; i++) {
-        new NumRangeComponent(elementsNum[i], opts);
+        new NumRangeComponent(elementsNum[i] as HTMLElement, opts);
     }
 
-    let elementsDate = document.getElementsByClassName('sa-filter-date');
+    const elementsDate = document.getElementsByClassName('sa-filter-date');
     for (let i = 0; i < elementsDate.length; i++) {
-        new DateRangeComponent(elementsDate[i], opts);
+        new DateRangeComponent(elementsDate[i] as HTMLElement, opts);
     }
 });

@@ -1,10 +1,12 @@
 //import {EventEmitter} from 'events';
 import Trigger, { TriggerInterface } from '../helper/Trigger';
 
-export interface BlockInterface<T> extends TriggerInterface {
-    validValue(value: string | null | string[]): boolean;
+export type valuesType = string[] | string | null;
 
-    setValue(value: string | null | string[]): void;
+export interface BlockInterface<T> extends TriggerInterface {
+    validValue(value: valuesType): boolean;
+
+    setValue(value: valuesType): void;
 
     setEmptyValue(): void;
 

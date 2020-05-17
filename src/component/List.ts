@@ -1,5 +1,4 @@
 import Component, { ComponentProps } from './Component';
-import { MultiSelectInterface } from '../block/MultiSelect';
 import { SAFilterOptions } from '../options/index';
 
 export interface ListProps<V> extends ComponentProps {
@@ -21,21 +20,20 @@ export default class ListComponent<V> extends Component {
     originOptions: JQuery;
     props: ListProps<V>;
 
-    constructor(component: Element, opts: SAFilterOptions) {
+    constructor(component: HTMLElement, opts: SAFilterOptions) {
         super(component, opts);
 
         this.readOptions();
     }
 
     readOptions() {
-        const selectElement = this.component.find('select');
+        this.originSelect = this.component.find('select');
+        this.originOptions = this.originSelect.find('option');
 
-        this.originSelect = selectElement;
-        this.originOptions = selectElement.find('option');
         this.props = Object.assign(this.props, {
-            name: selectElement.attr('name'),
-            value: selectElement.val(),
-            hide: selectElement.attr('data-hide') || '0',
+            name: this.originSelect.attr('name'),
+            value: this.originSelect.val(),
+            hide: this.originSelect.attr('data-hide') || '0',
             search_str: this.component.attr('data-search'),
             nomatch: this.component.attr('data-nomatch'),
             url: this.component.attr('data-url'),
