@@ -1,6 +1,6 @@
 {
     "name": "@kelatev/sa-filter",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "author": "Kelatev",
     "license": "MIT",
     "main": "/dist/main.umd.js",

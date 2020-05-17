@@ -111,16 +111,15 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
         if (this.validValue(this.props.value)) {
             //this.options.attr('selected', false);
             //this.options.filter('[value="' + this.props.value + '"]').attr('selected', true);
-            this.props.originOptions.parent()
-                .val(this.props.value);
+            this.props.originSelect.val(this.props.value);
         }
+        this.props.originSelect.get(0).dispatchEvent(new Event('change'));
     }
 
     setEmptyValue(): void {
         this.setValue(null);
         if (!this.resetOption) {
-            this.resetOption = this.props.originOptions
-                .parent()
+            this.resetOption = this.props.originSelect
                 .after($(`<input type="hidden" name="${this.props.name}" value="null">`));
         }
     }
