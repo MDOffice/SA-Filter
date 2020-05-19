@@ -65,7 +65,27 @@ class List<T> extends Block<T> implements ListInterface<T> {
                 '.select-list-item, .check-list-item',
                 function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     instance.handleChange(this);
+                }
+            );
+
+        $(instance.container)
+            .on(
+                'change',
+                '.check-list-item input',
+                function(e) {
+                    const isChecked = $(this).is(':checked');
+                    $(this).prop('checked', !isChecked);
+                    instance.handleChange($(this).closest('.check-list-item').get(0));
+                }
+            );
+        $(instance.container)
+            .on(
+                'click',
+                '.check-list-item input',
+                function(e) {
+                    e.stopPropagation();
                 }
             );
 
