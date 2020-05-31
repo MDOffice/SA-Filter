@@ -1,4 +1,4 @@
-# sa-filter-bootstrap
+# SA-Filter
 
 [![Build Status](https://travis-ci.com/kelatev/SA-Filter.svg?branch=master)](https://travis-ci.com/kelatev/SA-Filter)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/kelatev/SA-Filter?sort=semver)
