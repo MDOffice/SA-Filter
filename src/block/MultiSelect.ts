@@ -82,7 +82,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         $.each(this.elements, (index, element) => {
             if (value === null) {
                 element.active = false;
-            } else if (element.value === value) {
+            } else if (element.disabled == false && element.value === value) {
                 element.active = selected;
             }
         });
