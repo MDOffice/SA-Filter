@@ -71,7 +71,7 @@ class List<T> extends Block<T> implements ListInterface<T> {
         $(instance.container)
             .on(
                 'click',
-                '.select-list-item, .check-list-item',
+                '.select-list-item:not(.disabled), .check-list-item:not(.disabled)',
                 function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -86,7 +86,7 @@ class List<T> extends Block<T> implements ListInterface<T> {
         $(instance.container)
             .on(
                 'change',
-                '.check-list-item input',
+                '.check-list-item:not(.disabled) input',
                 function(e) {
                     const isChecked = $(this).is(':checked');
                     $(this).prop('checked', !isChecked);
