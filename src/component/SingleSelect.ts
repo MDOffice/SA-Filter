@@ -19,16 +19,19 @@ export default class SingleSelectComponent extends ListComponent<string> {
             value: this.props.value,
             originSelect: this.originSelect,
             originOptions: this.originOptions,
-            has_search: !!this.props.search_str,
-            clearTitle: this.props.clear_text,
-            searchTitle: this.props.search_str
-                ? this.props.search_str + '...'
-                : null,
-            search_id: this.containerId + '-search',
-            search_container: this.containerId + '-suggestion',
-            searchUrl: this.props.url,
-            searchUrlCache: this.props.urlCache,
-            nomatchText: this.props.nomatch,
+            containerId: this.containerId + '-suggestion',
+            search: {
+                visible: !!this.props.searchPlaceholder,
+                id: this.containerId + '-search',
+                placeholder: this.props.searchPlaceholder
+                    ? this.props.searchPlaceholder + '...'
+                    : null,
+                noMatchText: this.props.nomatch,
+                url: this.props.url,
+                urlCache: this.props.urlCache == '1'
+            },
+            clearTitle: this.props.clearTitle,
+            clearAlways: this.props.clearAlways,
             hide: this.props.hide,
             exclude: this.props.exclude,
             hidden: this.props.hidden

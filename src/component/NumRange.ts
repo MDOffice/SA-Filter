@@ -7,7 +7,7 @@ interface NumRangeProps extends ComponentProps {
     value: string
     title_min: string
     title_max: string
-    clear_text: string
+    clearTitle: string
 }
 
 export default class NumRangeComponent extends Component {

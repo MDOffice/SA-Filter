@@ -1,12 +1,9 @@
 import List, { ListInterface, ListItemInterface, ListProps } from './List';
 
 export interface SingleSelectInterface extends ListInterface<string> {
-
 }
 
 export interface SingleSelectProps extends ListProps<string> {
-    exclude?: string
-    hidden?: string
 }
 
 export default class SingleSelectBlock extends List<string> implements SingleSelectInterface {
@@ -17,23 +14,8 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
     constructor(props: SingleSelectProps) {
         super();
 
-        this.props = {
-            name: props.name,
-            value: props.value || '',
-            originSelect: props.originSelect,
-            originOptions: props.originOptions,
-            has_search: props.has_search,
-            searchTitle: props.searchTitle,
-            search_id: props.search_id || 'search',
-            search_container: props.search_container,
-            searchUrl: props.searchUrl,
-            searchUrlCache: props.searchUrlCache,
-            nomatchText: props.nomatchText,
-            exclude: props.exclude,
-            hidden: props.hidden,
-            hide: props.hide,
-            clearTitle: props.clearTitle
-        };
+        this.props = props;
+        this.props.value = props.value || '';
         this.state = {
             hide: props.hide
         };
@@ -126,7 +108,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
 
     refresh(customItems?: ListItemInterface[]): void {
         let instance = this,
-            $list = $(this._templateList());
+            $list = $(this.templateList());
 
         if (customItems) {
             $.each(customItems, function(index, element) {
@@ -142,7 +124,7 @@ export default class SingleSelectBlock extends List<string> implements SingleSel
             });
 
             if (need_clear && instance.props.clearTitle != '') {
-                $list.prepend(this._templateClearButton());
+                $list.prepend(this.templateClearButton());
             }
         }
 

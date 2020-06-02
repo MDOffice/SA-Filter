@@ -60,7 +60,7 @@
              data-btn-class=""
              data-nomatch="Немає збігів"
              data-ALL="Будь-які">
-            <select name="p_status_1" class="multi-select" multiple>
+            <select name="p_status_1" class="multi-select" multiple aria-label="3">
                 <option value="nowork" selected>Не дійсний</option>
                 <option value="work">Дійсний</option>
                 <option value="anul">Анульований</option>
@@ -68,14 +68,16 @@
         </div>
         <div class="sa-filter dropdown sa-filter-multiselect"
              data-clear="Очистити"
-             data-search="Назва"
+             data-clear-always="1"
+             data-selected-ignore="1"
              data-title="Статус"
              data-btn-class=""
              data-nomatch="Немає збігів"
              data-ALL="Будь-які">
-            <select name="p_status_2" class="multi-select" multiple>
+            <select name="p_status_2" class="multi-select" multiple aria-label="4">
                 <option value="nowork">Не дійсний</option>
-                <option value="work">Дійсний</option>
+                <option value="work" disabled>Дійсний</option>
+                <option></option>
                 <option value="anul">Анульований</option>
             </select>
         </div>

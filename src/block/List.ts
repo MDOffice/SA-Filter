@@ -9,26 +9,34 @@ export interface ListItemInterface {
     label: string
     title?: string
     active: boolean
+    disabled: boolean
 }
 
 export interface ListInterface<T> extends BlockInterface<T> {
     refresh(items?: ListItemInterface[]): void;
 }
 
+interface ListSearchProps {
+    visible: boolean
+    id: string
+    placeholder: string
+    noMatchText: string
+    url: string
+    urlCache: boolean
+}
+
 export interface ListProps<T> {
     name?: string
     value: T
-    has_search?: boolean
-    search_id?: string
-    hide?: string | number
-    searchUrl?: string
-    searchUrlCache?: string
-    nomatchText?: string
-    search_container?: string
-    searchTitle?: string
-    clearTitle?: string | null
     originSelect: JQuery
     originOptions: JQuery
+    containerId: string
+    search?: ListSearchProps
+    clearTitle?: string | null
+    clearAlways?: boolean
+    hide?: string | number
+    exclude?: string
+    hidden?: string
 }
 
 export interface ListState {
@@ -44,7 +52,7 @@ class List<T> extends Block<T> implements ListInterface<T> {
 
     _init() {
         let instance = this;
-        this.component = $(instance._template());
+        this.component = $(instance.template());
         this.container = instance.component.find('.sa-filter-list-scroll');
         this.elements = [];
 
@@ -54,7 +62,8 @@ class List<T> extends Block<T> implements ListInterface<T> {
                 value: that.attr('value'),
                 title: that.attr('title'),
                 label: that.html(),
-                active: that.prop('selected')
+                active: that.prop('selected'),
+                disabled: that.prop('disabled')
             });
         });
         this.refresh();
@@ -67,6 +76,10 @@ class List<T> extends Block<T> implements ListInterface<T> {
                     e.preventDefault();
                     e.stopPropagation();
                     instance.handleChange(this);
+
+                    if (instance.props.clearAlways) {
+                        instance.refresh();
+                    }
                 }
             );
 
@@ -78,6 +91,10 @@ class List<T> extends Block<T> implements ListInterface<T> {
                     const isChecked = $(this).is(':checked');
                     $(this).prop('checked', !isChecked);
                     instance.handleChange($(this).closest('.check-list-item').get(0));
+
+                    if (instance.props.clearAlways) {
+                        instance.refresh();
+                    }
                 }
             );
         $(instance.container)
@@ -107,14 +124,16 @@ class List<T> extends Block<T> implements ListInterface<T> {
                 instance.handleSearchClear(this);
             });
 
-        $(instance.component)
-            .on(
-                'keyup',
-                '#' + instance.props.search_id,
-                function() {
-                    instance.handleSearchChange(this);
-                }
-            );
+        if (this.props.search) {
+            $(instance.component)
+                .on(
+                    'keyup',
+                    '#' + instance.props.search.id,
+                    function() {
+                        instance.handleSearchChange(this);
+                    }
+                );
+        }
     }
 
     handleChange(self: HTMLElement) {
@@ -153,16 +172,13 @@ class List<T> extends Block<T> implements ListInterface<T> {
                 .addClass('clear-field ' + iconClear);
             let items: ListItemInterface[] = [],
                 is_active;
-            if (instance.props.searchUrl) {
+            if (instance.props.search.url) {
                 let data: { q: string, cache?: number } = { q: findText };
-                if (
-                    instance.props.searchUrlCache &&
-                    instance.props.searchUrlCache == '1'
-                ) {
+                if (instance.props.search.urlCache) {
                     data.cache = Math.random();
                 }
                 $.ajax({
-                    url: instance.props.searchUrl,
+                    url: instance.props.search.url,
                     dataType: 'json',
                     data: data,
                     async: false,
@@ -175,7 +191,8 @@ class List<T> extends Block<T> implements ListInterface<T> {
                             items.push({
                                 value: element.value,
                                 label: element.label,
-                                active: is_active
+                                active: is_active,
+                                disabled: false
                             });
                         });
                         instance.state.hide = d.hide || '0';
@@ -201,7 +218,7 @@ class List<T> extends Block<T> implements ListInterface<T> {
                     .remove();
                 instance.container.html(
                     '<li class="no-suggestions">' +
-                    instance.props.nomatchText +
+                    instance.props.search.noMatchText +
                     '</li>'
                 );
             } else {
@@ -239,25 +256,41 @@ class List<T> extends Block<T> implements ListInterface<T> {
         return this.component;
     }
 
-    _template() {
+    private template() {
         let html = '';
-        html += this.props.has_search ? this._templateSearch() : '';
+        if (this.props.search && this.props.search.visible) {
+            html += this.templateSearch();
+        }
+
         html +=
             '<div class="sa-filter-list" tabindex="-1"><div id="' +
-            this.props.search_container +
+            this.props.containerId +
             '" class="sa-filter-list-scroll" tabindex="-1"></div></div>';
         return html;
     }
 
-    _templateList(is_selected: boolean = false): string {
+    private templateSearch(): string {
         return (
-            '<ul class="aui-list-section' +
-            (is_selected ? ' selected-group' : '') +
-            '"></ul>'
+            '<div class="sa-filter-search">' +
+            '<input autocomplete="off" aria-autocomplete="list" placeholder="' +
+            this.props.search.placeholder +
+            '" class="form-control" id="' +
+            this.props.search.id +
+            '" aria-controls="' +
+            this.props.containerId +
+            '">' +
+            '<span class="icon-default ' +
+            iconSearch +
+            ' noloading"></span>' +
+            '</div>'
         );
     }
 
-    _templateClearButton(): string {
+    protected templateList(is_selected: boolean = false): string {
+        return `<ul class="${(is_selected ? ' selected-group' : '')}" />`;
+    }
+
+    protected templateClearButton(): string {
         if (this.props.clearTitle) {
             return (
                 '<li class="sa-filter-group-actions"><a href="#" class="clear-all">' +
@@ -265,23 +298,6 @@ class List<T> extends Block<T> implements ListInterface<T> {
                 '</a></li>'
             );
         }
-    }
-
-    _templateSearch(): string {
-        return (
-            '<div class="sa-filter-search">' +
-            '<input autocomplete="off" aria-autocomplete="list" placeholder="' +
-            this.props.searchTitle +
-            '" class="form-control" id="' +
-            this.props.search_id +
-            '" aria-controls="' +
-            this.props.search_container +
-            '">' +
-            '<span class="icon-default ' +
-            iconSearch +
-            ' noloading"></span>' +
-            '</div>'
-        );
     }
 }
 

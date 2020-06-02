@@ -3,11 +3,11 @@ import Dropdown, { DropdownInterface } from '../helper/Dropdown';
 import { SAFilterOptions } from '../options/index';
 
 export interface ComponentProps {
-    btn_class: string
+    btnClass: string
     title: string
-    title_always: boolean
-    ALL: string
-    clear_text: string
+    titleAlways: boolean
+    titleAll: string
+    clearTitle: string
     submit: string
     submit_text: string
 }
@@ -30,11 +30,11 @@ export default class Component {
         this.component = $(component);
 
         this.props = {
-            btn_class: this.component.attr('data-btn-class'),
+            btnClass: this.component.attr('data-btn-class'),
             title: this.component.attr('data-title'),
-            title_always: this.component.attr('data-title-always') == '1',
-            ALL: this.component.attr('data-ALL'),
-            clear_text: this.component.attr('data-clear'),
+            titleAlways: this.component.attr('data-title-always') == '1',
+            titleAll: this.component.attr('data-ALL'),
+            clearTitle: this.component.attr('data-clear'),
             submit: this.component.attr('data-submit'),
             submit_text: this.component.attr('data-submit-text')
         };
@@ -48,10 +48,10 @@ export default class Component {
     createButton() {
         this.button = new Button({
             id: this.containerId + '-dropdown',
-            className: this.props.btn_class,
+            className: this.props.btnClass,
             label: this.props.title,
-            labelAlways: this.props.title_always,
-            labelAll: this.props.ALL
+            labelAlways: this.props.titleAlways,
+            labelAll: this.props.titleAll
         });
     }
 

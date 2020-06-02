@@ -163,6 +163,13 @@
     margin: 0;
     padding: 2px 0;
 }
+.sa-filter-item-divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+}
+
 .check-list-select .check-list-group-actions {padding: 5px 10px;}
 .check-list-select .check-list-group-actions .clear-all {color: #3b73af;}
 .check-list-select .multiselect-field-container .icon-default.clear-field {cursor: pointer;opacity: 0.7;}

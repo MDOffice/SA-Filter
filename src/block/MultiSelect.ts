@@ -4,8 +4,7 @@ export interface MultiSelectInterface extends ListInterface<string[]> {
 }
 
 export interface MultiSelectProps extends ListProps<string[]> {
-    exclude?: string
-    hidden?: string
+    ignoreSelectedList?: boolean
 }
 
 export default class MultiSelect extends List<string[]> implements MultiSelectInterface {
@@ -16,22 +15,8 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
     constructor(props: MultiSelectProps) {
         super();
 
-        this.props = {
-            name: props.name,
-            value: props.value || [],
-            originSelect: props.originSelect,
-            originOptions: props.originOptions,
-            has_search: props.has_search,
-            searchTitle: props.searchTitle,
-            search_id: props.search_id || 'search',
-            search_container: props.search_container,
-            searchUrl: props.searchUrl,
-            searchUrlCache: props.searchUrlCache,
-            nomatchText: props.nomatchText,
-            exclude: props.exclude,
-            hidden: props.hidden,
-            clearTitle: props.clearTitle
-        };
+        this.props = props;
+        this.props.value = props.value || [];
         this.state = {
             hide: props.hide
         };
@@ -58,7 +43,8 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
                 value: value,
                 title: title,
                 label: label,
-                active: true
+                active: true,
+                disabled: false
             });
             this.props.originSelect.append(`<option value="${value}" title="${title}" selected>${label}</option>`);
         }
@@ -117,7 +103,6 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             }
         }
 
-        console.log('MultiSelectBlock.setValue', value, selected);
         if (this.validValue(value)) {
             this.props.originOptions.filter('[value="' + value + '"]')
                 .prop('selected', selected);
@@ -126,7 +111,6 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
     }
 
     setEmptyValue(): void {
-        console.log('MultiSelectBlock.setEmptyValue');
         this.props.originSelect.val('');
         /*this.props.originOptions.filter('[selected]')
             .prop('selected', false);*/
@@ -139,13 +123,13 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
 
     refresh(customItems?: ListItemInterface[]): void {
         //console.log('MultiSelectBlock.refresh');
-        const block_items = $(this._templateList());
-        const block_selected = $(this._templateList(true));
+        const block_items = $(this.templateList());
+        const block_selected = $(this.templateList(true));
         let block_clearButton;
 
         if (customItems) {
             $.each(customItems, (index, element) => {
-                if (element.active) {
+                if (element.active && !this.props.ignoreSelectedList) {
                     block_selected.append(this.templateListItem(element));
                 } else {
                     block_items.append(this.templateListItem(element));
@@ -156,6 +140,8 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             $.each(this.elements, (index, element) => {
                 if (element.active) {
                     buttonClearNeed = true;
+                }
+                if (element.active && !this.props.ignoreSelectedList) {
                     block_selected.append(this.templateListItem(element));
                 } else {
                     block_items.append(this.templateListItem(element));
@@ -163,7 +149,7 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             });
 
             if (buttonClearNeed && this.props.clearTitle != '') {
-                block_clearButton = $(this._templateClearButton());
+                block_clearButton = $(this.templateClearButton());
             }
         }
 
@@ -186,7 +172,13 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
     }
 
     private templateListItem(props: ListItemInterface): string {
-        return '<li class="check-list-item"><label class="item-label" title="' + (props.title || '') + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + '>' + props.label + '</label></li>';
+        let html = '';
+        if (props.label && props.value) {
+            html = '<li class="check-list-item' + (props.disabled ? ' disabled' : '') + '"><label class="item-label" title="' + (props.title || '') + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + (props.disabled ? ' disabled' : '') + '>' + props.label + '</label></li>';
+        } else {
+            html = '<li class="sa-filter-item-divider"></li>';
+        }
+        return html;
     }
 
 }

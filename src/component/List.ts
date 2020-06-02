@@ -4,8 +4,10 @@ import { SAFilterOptions } from '../options/index';
 export interface ListProps<V> extends ComponentProps {
     name: string
     value: V
-    clear_text: string
-    search_str: string
+    clearTitle: string
+    clearAlways: boolean
+    ignoreSelectedList?: boolean
+    searchPlaceholder: string
     url: string
     urlCache: string
     nomatch: string
@@ -33,8 +35,10 @@ export default class ListComponent<V> extends Component {
         this.props = Object.assign(this.props, {
             name: this.originSelect.attr('name'),
             value: this.originSelect.val(),
+            clearAlways: this.component.attr('data-clear-always') == '1',
+            ignoreSelectedList: this.component.attr('data-selected-ignore') == '1',
             hide: this.originSelect.attr('data-hide') || '0',
-            search_str: this.component.attr('data-search'),
+            searchPlaceholder: this.component.attr('data-search'),
             nomatch: this.component.attr('data-nomatch'),
             url: this.component.attr('data-url'),
             urlCache: this.component.attr('data-urlCache'),

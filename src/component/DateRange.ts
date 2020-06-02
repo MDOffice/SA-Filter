@@ -10,7 +10,7 @@ interface DateRangeProps extends ComponentProps {
     value: string
     title_min: string
     title_max: string
-    clear_text: string
+    clearTitle: string
 }
 
 export default class DateRangeComponent extends Component {
@@ -51,7 +51,7 @@ export default class DateRangeComponent extends Component {
                 min: this.props.title_min,
                 max: this.props.title_max
             },
-            clearTitle: this.props.clear_text,
+            clearTitle: this.props.clearTitle,
             error_date: 'Дата початку не може бути більше закінчення',
             initDatepicker: null
         }, this.opts);
@@ -61,10 +61,10 @@ export default class DateRangeComponent extends Component {
             this.blockSingleSelect = new SingleSelectBlock({
                 name: this.props.name,
                 value: this.props.value,
-                has_search: false,
-                clearTitle: this.props.clear_text,
                 originSelect: this.originSelect,
-                originOptions: this.originOptions
+                originOptions: this.originOptions,
+                containerId: this.containerId + '-suggestion',
+                clearTitle: this.props.clearTitle
             });
             this.dropdown.addBlock(this.blockSingleSelect);
         }
