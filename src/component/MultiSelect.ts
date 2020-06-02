@@ -19,7 +19,7 @@ export default class MultiSelectComponent extends ListComponent<string[]> {
             value: this.props.value,
             originSelect: this.originSelect,
             originOptions: this.originOptions,
-            has_search: true,
+            has_search: !!this.props.search_str,
             clearTitle: this.props.clear_text,
             searchTitle: this.props.search_str
                 ? this.props.search_str + '...'
