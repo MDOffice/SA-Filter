@@ -175,6 +175,8 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         let html = '';
         if (props.label && props.value) {
             html = '<li class="check-list-item' + (props.disabled ? ' disabled' : '') + '"><label class="item-label" title="' + (props.title || '') + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + (props.disabled ? ' disabled' : '') + '>' + props.label + '</label></li>';
+        } else if (props.label) {
+            html = '<li class="sa-filter-item-label">'+props.label+'</li>';
         } else {
             html = '<li class="sa-filter-item-divider"></li>';
         }

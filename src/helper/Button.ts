@@ -1,5 +1,6 @@
 export interface ButtonInterface {
     setValue(labelValue: string, title: string): void;
+
     render(): JQuery;
 }
 
@@ -13,7 +14,7 @@ export interface ButtonProps {
     title?: string
 }
 
-export default class Button implements ButtonInterface{
+export default class Button implements ButtonInterface {
 
     props: ButtonProps;
     container: JQuery;
@@ -57,5 +58,41 @@ export default class Button implements ButtonInterface{
         html += '</div>';
 
         return html;
+    }
+}
+
+class Button2 extends HTMLElement {
+
+    disabled: boolean;
+    _title: string;
+
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        const mountPoint = document.createElement('button');
+        mountPoint.setAttribute('data-toggle', 'dropdown');
+        this.appendChild(mountPoint);
+    }
+
+    static get observedAttributes() {
+        return ['disabled', 'title'];
+    }
+
+    attributeChangedCallback(attrName, oldValue, newValue) {
+        switch (attrName) {
+            case 'disabled':
+                this.disabled = newValue;
+                break;
+            case 'title':
+                this._title = newValue;
+                break;
+            default:
+        }
+    }
+
+    set title(newValue: string) {
+        this._title = newValue;
     }
 }

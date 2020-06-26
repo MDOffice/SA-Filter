@@ -46,5 +46,26 @@ export default class MultiSelectComponent extends ListComponent<string[]> {
             this.blockMultiSelect.refresh();
         });
     }
+}
 
+class MultiSelectComponent2 extends HTMLSelectElement {
+
+    constructor() {
+        super();
+    }
+
+    attributeChangedCallback(attrName, oldValue, newValue) {
+
+    }
+
+    connectedCallback() {
+        const mountPoint = document.createElement('div');
+        //button
+        //dropdown
+        this.appendChild(mountPoint);
+    }
+
+    static get observedAttributes() {
+        return ['data-url', 'data-cache'];
+    }
 }

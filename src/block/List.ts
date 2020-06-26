@@ -56,23 +56,24 @@ class List<T> extends Block<T> implements ListInterface<T> {
         this.container = instance.component.find('.sa-filter-list-scroll');
         this.elements = [];
 
-        $.each(this.props.originOptions, function() {
-            let that = $(this);
-            instance.elements.push({
+        instance.elements = this.props.originOptions.map((index, element) => {
+            let that = $(element);
+            return {
                 value: that.attr('value'),
                 title: that.attr('title'),
                 label: that.html(),
                 active: that.prop('selected'),
                 disabled: that.prop('disabled')
-            });
-        });
+            };
+        }).get();
         this.refresh();
 
-        $(instance.container)
+        $(this.component)
             .on(
                 'click',
                 '.select-list-item:not(.disabled), .check-list-item:not(.disabled)',
                 function(e) {
+                    console.log('inputParent:click');
                     e.preventDefault();
                     e.stopPropagation();
                     instance.handleChange(this);
@@ -83,13 +84,13 @@ class List<T> extends Block<T> implements ListInterface<T> {
                 }
             );
 
-        $(instance.container)
+        $(this.component)
             .on(
                 'change',
-                '.check-list-item:not(.disabled) input',
-                function(e) {
-                    const isChecked = $(this).is(':checked');
-                    $(this).prop('checked', !isChecked);
+                '.check-list-item input',
+                function() {
+                    console.log('input:change');
+                    this.checked = !this.checked;
                     instance.handleChange($(this).closest('.check-list-item').get(0));
 
                     if (instance.props.clearAlways) {
@@ -97,38 +98,33 @@ class List<T> extends Block<T> implements ListInterface<T> {
                     }
                 }
             );
-        $(instance.container)
+        $(this.component)
             .on(
                 'click',
-                '.check-list-item input',
+                '.check-list-item:not(.disabled) input',
                 function(e) {
+                    console.log('input:click');
                     e.stopPropagation();
                 }
             );
 
-        /*$(instance.container).on('click', '.select-list-item input, .check-list-item input', function (e) {
-            e.stopPropagation();
-            $(this).prop('checked', !this.checked);
-            instance.handleChange($(this).closest('.select-list-item, .check-list-item')[0]);
-        });*/
-
-        $(instance.component)
+        $(this.component)
             .on('click', '.clear-all', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 instance.handleClear();
             });
 
-        $(instance.component)
+        $(this.component)
             .on('click', '.clear-field', function() {
                 instance.handleSearchClear(this);
             });
 
         if (this.props.search) {
-            $(instance.component)
+            $(this.component)
                 .on(
                     'keyup',
-                    '#' + instance.props.search.id,
+                    '#' + this.props.search.id,
                     function() {
                         instance.handleSearchChange(this);
                     }

@@ -66,7 +66,7 @@
              data-nomatch="Немає збігів"
              data-ALL="Будь-які">
             <select name="p_status_1" class="multi-select" multiple aria-label="3">
-                <option value="nowork" selected>Не дійсний</option>
+                <option value="nowork">Не дійсний</option>
                 <option value="work">Дійсний</option>
                 <option value="anul">Анульований</option>
             </select>
@@ -81,8 +81,9 @@
              data-ALL="Будь-які">
             <select name="p_status_2" class="multi-select" multiple aria-label="4">
                 <option value="nowork">Не дійсний</option>
+                <option disabled></option>
                 <option value="work" disabled>Дійсний</option>
-                <option></option>
+                <option disabled>123</option>
                 <option value="anul">Анульований</option>
             </select>
         </div>
@@ -170,6 +171,23 @@
                 });
         }
     });
+
+    $('[name=p_status_2]')
+        .on('change', function() {
+            const checkbox = $('[name=p_status_1]')
+                .closest('.sa-filter')
+                .find(`[type="checkbox"][value="${this.value}"]`);
+
+            console.log('p_status_1:click:before');
+            checkbox.trigger('click');
+            console.log('p_status_1:click:after');
+        });
+
+    $('[name=p_status_1]')
+        .on('change', function() {
+            console.log('p_status_1:onChange');
+        });
+
 </script>
 
 

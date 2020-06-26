@@ -163,6 +163,7 @@
     margin: 0;
     padding: 2px 0;
 }
+
 .sa-filter-item-divider {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -170,28 +171,175 @@
     border-top: 1px solid #eeeeee;
 }
 
-.check-list-select .check-list-group-actions {padding: 5px 10px;}
-.check-list-select .check-list-group-actions .clear-all {color: #3b73af;}
-.check-list-select .multiselect-field-container .icon-default.clear-field {cursor: pointer;opacity: 0.7;}
-.check-list-item, .check-list-group-footer {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;padding: 6px 10px 6px 34px;position: relative;}
-.select-list-item, .select-list-group-footer {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;padding: 6px 10px;position: relative;}
+.sa-filter-item-label {
+    padding-left: 21px;
+    line-height: 21px;
+    border: 0;
+    position: relative;
+    color: #ababab;
+}
+
+.sa-filter-item-label:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    height: 1.3px;
+    background-color: #eeeeee;
+    z-index: 1;
+    width: 18px;
+    left: 0;
+}
+
+.sa-filter-item-label:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    height: 1.3px;
+    width: 100%;
+    background-color: #eeeeee;
+    z-index: 1;
+    margin-left: 3px;
+}
+
+.check-list-select .check-list-group-actions {
+    padding: 5px 10px;
+}
+
+.check-list-select .check-list-group-actions .clear-all {
+    color: #3b73af;
+}
+
+.check-list-select .multiselect-field-container .icon-default.clear-field {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.check-list-item, .check-list-group-footer {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 6px 10px 6px 34px;
+    position: relative;
+}
+
+.select-list-item, .select-list-group-footer {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 6px 10px;
+    position: relative;
+}
+
 .check-list-item label,
 .select-list-item label,
 .check-list-group-footer label,
-.select-list-group-footer label {clear: none;color: inherit;display: block;left: 0;line-height: 1.4;margin: 0;overflow: hidden;padding: 0;position: static;text-overflow: ellipsis;white-space: nowrap;width: auto;}
+.select-list-group-footer label {
+    clear: none;
+    color: inherit;
+    display: block;
+    left: 0;
+    line-height: 1.4;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: static;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: auto;
+}
+
 .check-list-item label input[type="checkbox"],
-.check-list-group-footer label input[type="checkbox"] {position: absolute;left: 10px;}
-.select-list-item,.select-list-item .item-label{cursor:pointer}
-.check-list-item:hover,.select-list-item:hover,.select-list-item.active{background-color: #ebf2f9;}
-.list-search .criteria-wrap {white-space: nowrap;text-overflow: ellipsis;overflow: hidden;max-width: 200px;}
-.check-list-select .sa-filter-list-scroll .no-suggestions {padding: 7px 11px 6px;background: #f2f2f2;}
-.sa-filter-list .no-suggestions {display: block;margin: 0;padding: 3px 10px;font-style: italic;}
+.check-list-group-footer label input[type="checkbox"] {
+    position: absolute;
+    left: 10px;
+}
 
-.sa-filter-form .form-body {padding: 10px;}
-.sa-filter-form .field-group {padding-left: 0;-moz-box-sizing: border-box;box-sizing: border-box;clear: both;position: relative;margin: 1px 0;width: 100%;}
-.sa-filter-form label {color: #707070;}
-.sa-filter-form .text {width: 100%;min-width: 200px;height: 2.1428571428571em;line-height: 1.4285714285714;padding: 4px 5px;border: 1px solid #ccc;border-radius: 3.01px;-moz-box-sizing: border-box;box-sizing: border-box;font-size: inherit;margin: 0;max-width: 250px;vertical-align: baseline;background: #fff;color: #333;font-family: inherit;}
+.select-list-item, .select-list-item .item-label {
+    cursor: pointer
+}
 
-.sa-filter-search{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;position: relative;padding: 5px 10px 9px;overflow: hidden;}
-.sa-filter-search .form-control {height:2.1em;padding: 0 24px 0 6px;-webkit-box-shadow: #bbb 0 7px 2px -7px inset;-moz-box-shadow: #bbb 0 7px 2px -7px inset;box-shadow: #bbb 0 7px 2px -7px inset;}
-.sa-filter-search .icon-default {position: absolute;top: 11px;right: 15px;z-index: 2;}
+.check-list-item:hover, .select-list-item:hover, .select-list-item.active {
+    background-color: #ebf2f9;
+}
+
+.list-search .criteria-wrap {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 200px;
+}
+
+.check-list-select .sa-filter-list-scroll .no-suggestions {
+    padding: 7px 11px 6px;
+    background: #f2f2f2;
+}
+
+.sa-filter-list .no-suggestions {
+    display: block;
+    margin: 0;
+    padding: 3px 10px;
+    font-style: italic;
+}
+
+.sa-filter-form .form-body {
+    padding: 10px;
+}
+
+.sa-filter-form .field-group {
+    padding-left: 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    clear: both;
+    position: relative;
+    margin: 1px 0;
+    width: 100%;
+}
+
+.sa-filter-form label {
+    color: #707070;
+}
+
+.sa-filter-form .text {
+    width: 100%;
+    min-width: 200px;
+    height: 2.1428571428571em;
+    line-height: 1.4285714285714;
+    padding: 4px 5px;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: inherit;
+    margin: 0;
+    max-width: 250px;
+    vertical-align: baseline;
+    background: #fff;
+    color: #333;
+    font-family: inherit;
+}
+
+.sa-filter-search {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    padding: 5px 10px 9px;
+    overflow: hidden;
+}
+
+.sa-filter-search .form-control {
+    height: 2.1em;
+    padding: 0 24px 0 6px;
+    -webkit-box-shadow: #bbb 0 7px 2px -7px inset;
+    -moz-box-shadow: #bbb 0 7px 2px -7px inset;
+    box-shadow: #bbb 0 7px 2px -7px inset;
+}
+
+.sa-filter-search .icon-default {
+    position: absolute;
+    top: 11px;
+    right: 15px;
+    z-index: 2;
+}
