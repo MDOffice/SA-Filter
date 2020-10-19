@@ -13,7 +13,9 @@ const common = {
             {
                 test: /\.(ts|tsx|js|jsx)?$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader?cacheDirectory=true'
+                use: {
+                    loader: 'babel-loader?cacheDirectory=true'
+                }
             },
             {
                 test: /\.css$/,

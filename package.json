@@ -1,6 +1,6 @@
 {
     "name": "@kelatev/sa-filter",
-    "version": "1.6.4",
+    "version": "1.6.5",
     "author": "Kelatev",
     "license": "MIT",
     "main": "/dist/main.umd.js",
@@ -28,7 +28,7 @@
         "@babel/types": "^7.12.1",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",
-        "css-loader": "^4.3.0",
+        "css-loader": "^5.0.0",
         "eslint": "^7.11.0",
         "file-loader": "^6.1.1",
         "jest": "^26.5.3",
@@ -37,8 +37,8 @@
         "source-map-loader": "^1.1.1",
         "ts-loader": "^8.0.5",
         "typescript": "^4.0.3",
-        "webpack": "^4.44.2",
-        "webpack-cli": "^3.3.12",
+        "webpack": "^5.1.3",
+        "webpack-cli": "^4.0.0",
         "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^5.2.0"
     },
