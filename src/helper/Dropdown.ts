@@ -128,7 +128,7 @@ export default class Dropdown implements DropdownInterface {
     private templateContainer(): string {
         let html = '';
         html += '<div id="' + this.props.id + '" class="sa-filter-form  dropdown-menu">';
-        html += '<form onsubmit="return false" />';
+        html += '<form onsubmit="return false"></form>';
         if (this.props.submitText) {
             html += '<div class="submit-footer" style="display:none">' + this.props.submitText + '</div>';
         }
