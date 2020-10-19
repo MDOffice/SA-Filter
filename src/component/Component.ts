@@ -33,7 +33,7 @@ export default class Component {
             btnClass: this.component.attr('data-btn-class'),
             title: this.component.attr('data-title'),
             titleAlways: this.component.attr('data-title-always') == '1',
-            titleAll: this.component.attr('data-ALL'),
+            titleAll: this.component.attr('data-title-all') || this.component.attr('data-all'),
             clearTitle: this.component.attr('data-clear'),
             submit: this.component.attr('data-submit'),
             submit_text: this.component.attr('data-submit-text')

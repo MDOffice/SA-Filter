@@ -46,53 +46,17 @@ export default class Button implements ButtonInterface {
 
     templateContent(): string {
         let html = '';
-        let title = '';
         let has_value = this.props.labelValue && this.props.labelValue !== '';
 
         html += '<div class="criteria-wrap" title="' + (this.props.title || '') + '">';
         if (!has_value || this.props.labelAlways) {
             html += '<span class="fieldLabel">' + this.props.label + ':</span> ';
         }
+        console.log(has_value ? 'labelValue': 'labelAll');
         html += has_value ? this.props.labelValue : this.props.labelAll;
         html += ' <span class="caret" />';
         html += '</div>';
 
         return html;
-    }
-}
-
-class Button2 extends HTMLElement {
-
-    disabled: boolean;
-    _title: string;
-
-    constructor() {
-        super();
-    }
-
-    connectedCallback() {
-        const mountPoint = document.createElement('button');
-        mountPoint.setAttribute('data-toggle', 'dropdown');
-        this.appendChild(mountPoint);
-    }
-
-    static get observedAttributes() {
-        return ['disabled', 'title'];
-    }
-
-    attributeChangedCallback(attrName, oldValue, newValue) {
-        switch (attrName) {
-            case 'disabled':
-                this.disabled = newValue;
-                break;
-            case 'title':
-                this._title = newValue;
-                break;
-            default:
-        }
-    }
-
-    set title(newValue: string) {
-        this._title = newValue;
     }
 }
