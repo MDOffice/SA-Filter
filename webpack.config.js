@@ -36,7 +36,10 @@ const common = {
             path.join(__dirname, 'lib'),
             path.join(__dirname, 'dist')
         ],
-        compress: true
+        compress: true,
+        progress: true,
+        open: true,
+        port: 9000
     }
 };
 
