@@ -134,10 +134,11 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         this.setEmptyValue();
         $.each(this.elements, (index, element) => {
             element.active = true;
+            this.setValue(element.value,true);
         });
         this.props.originSelect.find('option').prop('selected',true);
         this.emit('change');
-         this.refresh();
+        this.refresh();
     }
 
     refresh(customItems?: ListItemInterface[]): void {
