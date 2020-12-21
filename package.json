@@ -7,7 +7,7 @@
     "module": "/dist/main.js",
     "public": true,
     "scripts": {
-        "dev": "webpack-dev-server --inline --progress --mode development --open",
+        "dev": "webpack serve",
         "start": "npm run dev",
         "unit": "jest --config test/unit/jest.conf.js --coverage",
         "test": "npm run unit",

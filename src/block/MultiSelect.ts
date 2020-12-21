@@ -4,7 +4,8 @@ export interface MultiSelectInterface extends ListInterface<string[]> {
 }
 
 export interface MultiSelectProps extends ListProps<string[]> {
-    ignoreSelectedList?: boolean
+    ignoreSelectedList?: boolean,
+    selectAllTitle?: string
 }
 
 export default class MultiSelect extends List<string[]> implements MultiSelectInterface {
@@ -21,6 +22,14 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
             hide: props.hide
         };
         this._init();
+
+        let instance = this;
+        $(this.component)
+            .on('click', '.select-all', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                instance.handleSelectAll();
+            });
     }
 
     handleChange(self: HTMLElement) {
@@ -121,11 +130,22 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         }
     }
 
+    handleSelectAll(): void {
+        this.setEmptyValue();
+        $.each(this.elements, (index, element) => {
+            element.active = true;
+        });
+        this.props.originSelect.find('option').prop('selected',true);
+        this.emit('change');
+         this.refresh();
+    }
+
     refresh(customItems?: ListItemInterface[]): void {
         //console.log('MultiSelectBlock.refresh');
         const block_items = $(this.templateList());
         const block_selected = $(this.templateList(true));
         let block_clearButton;
+        let selectall_button;
 
         if (customItems) {
             $.each(customItems, (index, element) => {
@@ -154,6 +174,9 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         }
 
         this.container.empty();
+        if (this.props.selectAllTitle && this.props.selectAllTitle != '') {
+            this.container.append($(this.templateSelectAllButton()));
+        }
         if (block_clearButton) {
             this.container.append(block_clearButton);
         }
@@ -171,12 +194,19 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         }
     }
 
+    private templateSelectAllButton(): string {
+        return '<li class="sa-filter-group-actions"><a href="#" class="select-all">' +
+            this.props.selectAllTitle +
+            '</a></li>'
+            ;
+    }
+
     private templateListItem(props: ListItemInterface): string {
         let html = '';
         if (props.label && props.value) {
             html = '<li class="check-list-item' + (props.disabled ? ' disabled' : '') + '"><label class="item-label" title="' + (props.title || '') + '"><input type="checkbox" tabindex="-1" value="' + props.value + '" ' + (props.active ? 'checked' : '') + (props.disabled ? ' disabled' : '') + '>' + props.label + '</label></li>';
         } else if (props.label) {
-            html = '<li class="sa-filter-item-label">'+props.label+'</li>';
+            html = '<li class="sa-filter-item-label">' + props.label + '</li>';
         } else {
             html = '<li class="sa-filter-item-divider"></li>';
         }
