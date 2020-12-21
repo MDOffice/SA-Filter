@@ -35,7 +35,8 @@ export default class MultiSelectComponent extends ListComponent<string[]> {
             ignoreSelectedList: this.props.ignoreSelectedList,
             hide: this.props.hide,
             exclude: this.props.exclude,
-            hidden: this.props.hidden
+            hidden: this.props.hidden,
+            selectAllTitle: this.props.selectAllTitle
         });
         this.dropdown.addBlock(this.blockMultiSelect);
     }

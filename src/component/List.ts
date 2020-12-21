@@ -14,6 +14,7 @@ export interface ListProps<V> extends ComponentProps {
     hide: string
     exclude: string
     hidden: string
+    selectAllTitle: string
 }
 
 export default class ListComponent<V> extends Component {
@@ -43,7 +44,8 @@ export default class ListComponent<V> extends Component {
             url: this.component.attr('data-url'),
             urlCache: this.component.attr('data-urlCache'),
             exclude: this.component.attr('data-exclude'),
-            hidden: this.component.attr('data-hidden')
+            hidden: this.component.attr('data-hidden'),
+            selectAllTitle: this.component.attr('data-selectAll-title')
         });
     }
 }
