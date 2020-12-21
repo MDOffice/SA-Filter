@@ -131,13 +131,11 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
     }
 
     handleSelectAll(): void {
-        this.setEmptyValue();
         $.each(this.elements, (index, element) => {
-            element.active = true;
+            this.setValue(element.value,true);
         });
-        this.props.originSelect.find('option').prop('selected',true);
         this.emit('change');
-         this.refresh();
+        this.refresh();
     }
 
     refresh(customItems?: ListItemInterface[]): void {
@@ -145,7 +143,6 @@ export default class MultiSelect extends List<string[]> implements MultiSelectIn
         const block_items = $(this.templateList());
         const block_selected = $(this.templateList(true));
         let block_clearButton;
-        let selectall_button;
 
         if (customItems) {
             $.each(customItems, (index, element) => {
