@@ -53,6 +53,7 @@ class MultiSelectComponent2 extends HTMLSelectElement {
 
     constructor() {
         super();
+        this.multiple = true;
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {
