@@ -1,10 +1,24 @@
 # SA-Filter
 
-![Node.js CI](https://github.com/kelatev/SA-Filter/workflows/Node.js%20CI/badge.svg)
-![npm](https://img.shields.io/npm/v/@kelatev/sa-filter)
-[![David](https://img.shields.io/david/kelatev/SA-Filter)](https://david-dm.org/kelatev/SA-Filter)
-[![David](https://img.shields.io/david/dev/kelatev/SA-Filter)](https://david-dm.org/kelatev/SA-Filter?type=dev)
+Фильтр для ТПП
 
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/kelatev/SA-Filter)
-![GitHub](https://img.shields.io/github/license/kelatev/SA-Filter)
+![npm](https://img.shields.io/npm/v/@mdoffice/sa-filter)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/MDOffice/SA-Filter)
 
+Installation
+-----------
+```bash
+npm install @mdoffice/sa-filter
+```
+
+Publish (manual)
+-----------
+```bash
+npm ci
+npm run build
+npm version patch
+git push origin
+git push --tags
+npm adduser --registry=https://registry.npmjs.org //if first
+npm publish
+```

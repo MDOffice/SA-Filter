@@ -1,0 +1,16 @@
+#root
+.idea
+.github
+.editorconfig
+.eslintignore
+.eslintrc.json
+.gitignore
+.prettierrc
+tsconfig.json
+webpack.config.js
+
+#subfolder
+examples
+node_modules
+src
+test

@@ -1,5 +1,5 @@
 {
-  "name": "@kelatev/sa-filter",
+  "name": "@mdoffice/sa-filter",
   "version": "1.7.1",
   "author": "Kelatev",
   "license": "MIT",
@@ -12,13 +12,11 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
     "lint": "eslint --ext .js src test/unit",
-    "build": "webpack --mode production",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:kelatev/SA-Filter.git"
+    "url": "git@github.com:MDOffice/SA-Filter.git"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
