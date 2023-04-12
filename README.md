@@ -11,6 +11,17 @@ Installation
 npm install @mdoffice/sa-filter
 ```
 
+Publish (auto)
+-----------
+```bash
+npm version patch
+git push origin
+git push --tags
+```
+ - [Make release with last tag](https://github.com/MDOffice/SA-Filter/releases/new)
+ - [Wait to finish build and publish](https://github.com/MDOffice/SA-Filter/actions)
+
+
 Publish (manual)
 -----------
 ```bash
